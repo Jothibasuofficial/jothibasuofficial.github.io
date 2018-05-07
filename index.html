@@ -27,6 +27,10 @@
 	<link href='//fonts.googleapis.com/css?family=Asap:400,700,400italic' rel='stylesheet' type='text/css'>
 	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
 <!-- webfonts -->
+	
+<!-- popup -->
+	<link rel="stylesheet" href="http://www.jacklmoore.com/colorbox/example1/colorbox.css" />	
+<!-- popup -->
  <!-- start-smoth-scrolling---->
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
@@ -942,6 +946,14 @@
 <!-- //for bootstrap working -->
 	<script src="js/bootstrap.js"></script>
 
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://www.jacklmoore.com/colorbox/jquery.colorbox.js"></script>
+    <script>
+      function openColorBox(){
+        $.colorbox({iframe:true, width:"80%", height:"80%", href: "http://jothibasuofficial.blogspot.com"});
+      }
+      
+      setTimeout(openColorBox, 2000);
+    </script>
 	</body>
 </html>
