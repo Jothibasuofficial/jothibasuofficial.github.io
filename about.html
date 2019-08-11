@@ -24,16 +24,25 @@
 
 	<!-- Load Facebook SDK for JavaScript -->
 	<div id="fb-root"></div>
-	<script>(function (d, s, id) {
+	<script>
+		window.fbAsyncInit = function () {
+			FB.init({
+				xfbml: true,
+				version: 'v4.0'
+			});
+		};
+
+		(function (d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) return;
 			js = d.createElement(s); js.id = id;
-			js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+			js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));</script>
 
 	<!-- Your customer chat code -->
-	<div class="fb-customerchat" attribution=setup_tool page_id="257217787776213">
+	<div class="fb-customerchat" attribution=setup_tool page_id="257217787776213"
+		logged_in_greeting="Let's connect here" logged_out_greeting="Login to chat with me">
 	</div>
 
 	<!--================ Start Header Area =================-->
@@ -90,7 +99,8 @@
 								<a href="https://www.linkedin.com/in/jothibasuofficial/"><i class="ti-linkedin"></i></a>
 								<a href="https://www.facebook.com/Jothibasu.officialpage"><i
 										class="ti-facebook"></i></a>
-								<a href="https://twitter.com/imjothibasu"><i class="ti-twitter-alt"></i></a>
+								<a href="https://www.uplabs.com/jothibasu"><i class="ti-dribbble"></i></a>
+								<a href="https://www.github.com/jothibasuofficial"><i class="ti-github"></i></a>
 								<!-- <a href="skype:jothiboss?call"><i class="ti-skype"></i></a>
 										<a href="https://instagram.com/jothibasu.official"><i class="ti-instagram"></i></a>
 										<a href="https://dribbble.com/jothibasu"><i class="ti-dribbble"></i></a> -->
@@ -164,7 +174,7 @@
 							and delivering complex back-end and web applications using various programming languages and
 							technologies
 						</p>
-						<a class="primary_btn" href="docs/Jothibasu.pdf" download><span>Download CV</span></a>
+						<a class="primary_btn" href="docs/Jothibasu_New.pdf" download><span>Download CV</span></a>
 					</div>
 				</div>
 			</div>
@@ -270,13 +280,31 @@
 								<img src="img/brands/java.svg" alt="">
 							</div>
 						</div>
-						<!-- single-brand -->
 						<div class="single-brand-item d-table p-5">
 							<div class="d-table-cell">
-								<img src="img/brands/docker.svg" alt="">
+								<img src="img/brands/react-native.svg" alt="">
 							</div>
 						</div>
-						<!-- single-brand -->
+						<div class="single-brand-item d-table p-5">
+							<div class="d-table-cell">
+								<img src="img/brands/mysql.svg" alt="">
+							</div>
+						</div>
+						<div class="single-brand-item d-table p-5">
+							<div class="d-table-cell">
+								<img src="img/brands/mongodb.svg" alt="">
+							</div>
+						</div>
+						<div class="single-brand-item d-table p-5">
+							<div class="d-table-cell">
+								<img src="img/brands/html.svg" alt="">
+							</div>
+						</div>
+						<div class="single-brand-item d-table p-5">
+							<div class="d-table-cell">
+								<img src="img/brands/css.svg" alt="">
+							</div>
+						</div>
 						<div class="single-brand-item d-table p-5">
 							<div class="d-table-cell">
 								<img src="img/brands/bootstrap.svg" alt="">
@@ -284,7 +312,12 @@
 						</div>
 						<div class="single-brand-item d-table p-5">
 							<div class="d-table-cell">
-								<img src="img/brands/react-native.svg" alt="">
+								<img src="img/brands/jquery.svg" alt="">
+							</div>
+						</div>
+						<div class="single-brand-item d-table p-5">
+							<div class="d-table-cell">
+								<img src="img/brands/docker.svg" alt="">
 							</div>
 						</div>
 						<div class="single-brand-item d-table p-5">
@@ -299,17 +332,22 @@
 						</div>
 						<div class="single-brand-item d-table p-5">
 							<div class="d-table-cell">
-								<img src="img/brands/mysql.svg" alt="">
+								<img src="img/brands/kafka.svg" alt="">
 							</div>
 						</div>
 						<div class="single-brand-item d-table p-5">
 							<div class="d-table-cell">
-								<img src="img/brands/html.svg" alt="">
+								<img src="img/brands/aws.svg" alt="">
 							</div>
 						</div>
 						<div class="single-brand-item d-table p-5">
 							<div class="d-table-cell">
-								<img src="img/brands/css.svg" alt="">
+								<img src="img/brands/google-cloud.svg" alt="">
+							</div>
+						</div>
+						<div class="single-brand-item d-table p-5">
+							<div class="d-table-cell">
+								<img src="img/brands/digitalocean.svg" alt="">
 							</div>
 						</div>
 					</div>
@@ -363,6 +401,36 @@
 					</div>
 				</div>
 
+
+				<div class="testimonial-item">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="testi-img mb-4 mb-lg-0">
+								<img src="img/testimonials/121Event.jpg" alt="">
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="testi-right">
+								<h4>Neeraj Yadav</h4>
+								<p><small>Founder & Director, 121Event</small></p>
+
+								<p>I have worked with Jothi for quite few months now, he has been excellent with his
+									design inputs for the project. Jothi is excellent with his technical skills on
+									React native, thorough professional and a great human being. I loved working
+									with you Jothi on 121Event app and would love to work with you in future.
+								</p>
+								<ul class="star_rating mt-4">
+									<li><span><i class="fas fa-star"></i></span></li>
+									<li><span><i class="fas fa-star"></i></span></li>
+									<li><span><i class="fas fa-star"></i></span></li>
+									<li><span><i class="fas fa-star"></i></span></li>
+									<li><span><i class="fas fa-star"></i></span></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
 				<div class="testimonial-item">
 					<div class="row">
 						<div class="col-lg-6">
@@ -375,9 +443,12 @@
 								<h4>Manikandaprabhu</h4>
 								<p><small>Co-founder & Chairman, Search Anything</small></p>
 
-								<p>Jothibasu is one of the best among all people I have ever met and is a loyal student,
-									understands complex matters. As I remember, Jothibasu was a very productive person
-									and is a multi-skilled person with vast knowledge. He is careful, proactive, self
+								<p>Jothibasu is one of the best among all people I have ever met and is a loyal
+									student,
+									understands complex matters. As I remember, Jothibasu was a very productive
+									person
+									and is a multi-skilled person with vast knowledge. He is careful, proactive,
+									self
 									motivated and intelligent team player. Both smart and professional. Highly
 									recommended.
 								</p>
@@ -405,7 +476,8 @@
 								<h4>Sarada Prasanna Satapathy</h4>
 								<p><small>Senior Manager, Pegasystems</small></p>
 
-								<p>Jothi Basu was a vivid learner that I came across during the Tech Course I we deliver
+								<p>Jothi Basu was a vivid learner that I came across during the Tech Course I we
+									deliver
 									at his college under University Academic program. All the best to you in your
 									upcoming career.
 								</p>
@@ -433,8 +505,10 @@
 								<h4>Arun N</h4>
 								<p><small>Linux System Administrator, Acceletrade</small></p>
 
-								<p>Jothi Basu is talented and hard working professional, He has strong technical skills
-									and he is also a continuous learner. He can be trusted with any project and he will
+								<p>Jothi Basu is talented and hard working professional, He has strong technical
+									skills
+									and he is also a continuous learner. He can be trusted with any project and he
+									will
 									figure out the way to complete the project.
 								</p>
 								<ul class="star_rating mt-3">

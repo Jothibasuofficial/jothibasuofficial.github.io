@@ -23,16 +23,25 @@
 
 	<!-- Load Facebook SDK for JavaScript -->
 	<div id="fb-root"></div>
-	<script>(function (d, s, id) {
+	<script>
+		window.fbAsyncInit = function () {
+			FB.init({
+				xfbml: true,
+				version: 'v4.0'
+			});
+		};
+
+		(function (d, s, id) {
 			var js, fjs = d.getElementsByTagName(s)[0];
 			if (d.getElementById(id)) return;
 			js = d.createElement(s); js.id = id;
-			js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+			js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
 			fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));</script>
 
 	<!-- Your customer chat code -->
-	<div class="fb-customerchat" attribution=setup_tool page_id="257217787776213">
+	<div class="fb-customerchat" attribution=setup_tool page_id="257217787776213"
+		logged_in_greeting="Let's connect here" logged_out_greeting="Login to chat with me">
 	</div>
 
 	<!--================ Start Header Area =================-->
@@ -53,7 +62,7 @@
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
 						<ul class="nav navbar-nav menu_nav justify-content-end">
-							<li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+							<li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
 							<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
 							<li class="nav-item"><a class="nav-link" href="experience.html">Experience</a></li>
 							<li class="nav-item"><a class="nav-link" href="education.html">Education</a></li>
@@ -89,10 +98,11 @@
 								<a href="https://www.linkedin.com/in/jothibasuofficial/"><i class="ti-linkedin"></i></a>
 								<a href="https://www.facebook.com/Jothibasu.officialpage"><i
 										class="ti-facebook"></i></a>
-								<a href="https://twitter.com/imjothibasu"><i class="ti-twitter-alt"></i></a>
+								<a href="https://www.uplabs.com/jothibasu"><i class="ti-dribbble"></i></a>
+								<a href="https://www.github.com/jothibasuofficial"><i class="ti-github"></i></a>
+								<!-- <a href="https://twitter.com/imjothibasu"><i class="ti-twitter-alt"></i></a> -->
 								<!-- <a href="skype:jothiboss?call"><i class="ti-skype"></i></a>
-								<a href="https://instagram.com/jothibasu.official"><i class="ti-instagram"></i></a>
-								<a href="https://dribbble.com/jothibasu"><i class="ti-dribbble"></i></a> -->
+								<a href="https://instagram.com/jothibasu.official"><i class="ti-instagram"></i></a> -->
 
 							</div>
 							<a class="primary_btn" onclick="scrollToWorks()"><span class="font-color-white">See My
@@ -201,86 +211,6 @@
 
 						<div class="row p-3">
 							<div class="col-lg-4 col-md-4 col-sm-12">
-								<a href="projects/glims.html">
-									<img src="img/projects/glims/demo.jpg" alt="" class="img-fluid"></a>
-							</div>
-							<div class="col-lg-8 col-md-8 col-sm-12 pt-3 pt-lg-0 pt-md-0">
-								<h4>Glukoin LIMS</h4>
-								<h6 class="font-light-grey">Cloud Based Lab Management Software</h6>
-								<p class="p-fixed-content">Glukoin Lab Information management system is simple and smart
-									lab workflow management
-									<br />• Smart Billing
-									• Easy Workflow management
-									• Role-based access to staff
-									• Dynamic print configuration
-									• Smart and easy revenue report
-									• Multiple branch management
-								</p>
-								<a href="projects/glims.html" class="primary_btn2">More</a>
-							</div>
-						</div>
-
-						<div class="row p-3">
-							<div class="col-lg-4 col-md-4 col-sm-12">
-								<a href="projects/glukoin.html">
-									<img src="img/projects/glukoin/demo.jpg" alt="" class="img-fluid"></a>
-							</div>
-							<div class="col-lg-8 col-md-8 col-sm-12 pt-3 pt-lg-0 pt-md-0">
-								<h4>GLUKOIN &reg;</h4>
-								<h6 class="font-light-grey">Organize all your health reports in a single place</h6>
-								<p class="p-fixed-content">Glukoin helps diabetic people to manage their health better
-									and constantly
-									tracks their health and provides a single place to manage their data.
-									<br />• Manage all your medical records.
-									• Visual reports
-									• Invite friends and family and build community
-									• Live update of your lab report status
-									• Share reports with your friends and family
-									• Track your diabetic
-								</p>
-								<a href="projects/glukoin.html" class="primary_btn2">More</a>
-							</div>
-						</div>
-
-						<div class="row p-3">
-							<div class="col-lg-4 col-md-4 col-sm-12">
-								<a href="projects/121Event.html">
-									<img src="img/projects/121Event/demo.jpg" alt="" class="img-fluid"></a>
-							</div>
-							<div class="col-lg-8 col-md-8 col-sm-12 pt-3 pt-lg-0 pt-md-0">
-								<h4>121Event</h4>
-								<h6 class="font-light-grey">End to End Conference Booking Solution</h6>
-								<p class="p-fixed-content">121EVENT is a complete solution to Automate conference
-									booking and QR
-									validation. This mobile application has been designed for Conference staff to
-									monitor the booking
-									status. Scan QR for ticket validation and get instant attendance report of the
-									participants
-
-								</p>
-								<a href="projects/121Event.html" class="primary_btn2">More</a>
-							</div>
-						</div>
-
-						<div class="row p-3">
-							<div class="col-lg-4 col-md-4 col-sm-12">
-								<a href="projects/strakin.html">
-									<img src="img/projects/strakin/demo.jpg" alt="" class="img-fluid"></a>
-							</div>
-							<div class="col-lg-8 col-md-8 col-sm-12 pt-3 pt-lg-0 pt-md-0">
-								<h4>strakin.com</h4>
-								<h6 class="font-light-grey">Designed and developed company portfolio</h6>
-								<p class="p-fixed-content">
-									Technologies/Tools Used:
-									<br />- HTML, CSS, Bootstrap, Javascript
-									<br />- Adobe Photoshop, Adobe Illustrator
-								</p>
-								<a href="projects/strakin.html" class="primary_btn2">More</a>
-							</div>
-						</div>
-
-						<div class="row p-3">
-							<div class="col-lg-4 col-md-4 col-sm-12">
 								<a href="projects/glukoin-mobile-app.html">
 									<img src="img/projects/glukoin-mobile-app/demo.jpg" alt="" class="img-fluid"></a>
 							</div>
@@ -310,6 +240,49 @@
 
 						<div class="row p-3">
 							<div class="col-lg-4 col-md-4 col-sm-12">
+								<a href="projects/121Event.html">
+									<img src="img/projects/121Event/demo.jpg" alt="" class="img-fluid"></a>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-12 pt-3 pt-lg-0 pt-md-0">
+								<h4>121Event</h4>
+								<h6 class="font-light-grey">End to End Conference Booking Solution</h6>
+								<p class="p-fixed-content">121EVENT is a complete solution to Automate conference
+									booking and QR
+									validation. This mobile application has been designed for Conference staff to
+									monitor the booking
+									status. Scan QR for ticket validation and get instant attendance report of the
+									participants
+
+								</p>
+								<a href="projects/121Event.html" class="primary_btn2">More</a>
+							</div>
+						</div>
+
+
+						<div class="row p-3">
+							<div class="col-lg-4 col-md-4 col-sm-12">
+								<a href="projects/glukoin.html">
+									<img src="img/projects/glukoin/demo.jpg" alt="" class="img-fluid"></a>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-12 pt-3 pt-lg-0 pt-md-0">
+								<h4>GLUKOIN &reg;</h4>
+								<h6 class="font-light-grey">Organize all your health reports in a single place</h6>
+								<p class="p-fixed-content">Glukoin helps diabetic people to manage their health better
+									and constantly
+									tracks their health and provides a single place to manage their data.
+									<br />• Manage all your medical records.
+									• Visual reports
+									• Invite friends and family and build community
+									• Live update of your lab report status
+									• Share reports with your friends and family
+									• Track your diabetic
+								</p>
+								<a href="projects/glukoin.html" class="primary_btn2">More</a>
+							</div>
+						</div>
+
+						<div class="row p-3">
+							<div class="col-lg-4 col-md-4 col-sm-12">
 								<a href="projects/edi.html">
 									<img src="img/projects/edi/demo.jpg" alt="" class="img-fluid"></a>
 							</div>
@@ -322,6 +295,44 @@
 									<br />- Admin portal for EDI to manage developer subscriptions
 								</p>
 								<a href="projects/edi.html" class="primary_btn2">More</a>
+							</div>
+						</div>
+
+						<div class="row p-3">
+							<div class="col-lg-4 col-md-4 col-sm-12">
+								<a href="projects/glims.html">
+									<img src="img/projects/glims/demo.jpg" alt="" class="img-fluid"></a>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-12 pt-3 pt-lg-0 pt-md-0">
+								<h4>Glukoin LIMS</h4>
+								<h6 class="font-light-grey">Cloud Based Lab Management Software</h6>
+								<p class="p-fixed-content">Glukoin Lab Information management system is simple and smart
+									lab workflow management
+									<br />• Smart Billing
+									• Easy Workflow management
+									• Role-based access to staff
+									• Dynamic print configuration
+									• Smart and easy revenue report
+									• Multiple branch management
+								</p>
+								<a href="projects/glims.html" class="primary_btn2">More</a>
+							</div>
+						</div>
+
+						<div class="row p-3">
+							<div class="col-lg-4 col-md-4 col-sm-12">
+								<a href="projects/strakin.html">
+									<img src="img/projects/strakin/demo.jpg" alt="" class="img-fluid"></a>
+							</div>
+							<div class="col-lg-8 col-md-8 col-sm-12 pt-3 pt-lg-0 pt-md-0">
+								<h4>strakin.com</h4>
+								<h6 class="font-light-grey">Designed and developed company portfolio</h6>
+								<p class="p-fixed-content">
+									Technologies/Tools Used:
+									<br />- HTML, CSS, Bootstrap, Javascript
+									<br />- Adobe Photoshop, Adobe Illustrator
+								</p>
+								<a href="projects/strakin.html" class="primary_btn2">More</a>
 							</div>
 						</div>
 
