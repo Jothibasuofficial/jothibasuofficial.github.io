@@ -1,0 +1,77 @@
+"<?xml version=""1.0"" encoding=""UTF-8""?>"
+<urlset
+"      xmlns=""http://www.sitemaps.org/schemas/sitemap/0.9"""
+"      xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"""
+"      xsi:schemaLocation=""http://www.sitemaps.org/schemas/sitemap/0.9"
+"            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"">"
+
+
+
+<url>
+  <loc>https://jothibasuofficial.github.io/</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/index.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/about.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/experience.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/education.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/blog.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/projects/glukoin-mobile-app.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/projects/121Event.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/projects/glukoin.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/projects/makhira.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/projects/glims.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/projects/strakin.html</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jothibasuofficial.github.io/docs/Jothibasu_New.pdf</loc>
+  <lastmod>2019-12-19T16:52:39+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
