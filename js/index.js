@@ -39,7 +39,7 @@ function calculateMyAge() {
 }
 
 function calculateMyAgeNew() {
-  let dateString = "03/04/1997"
+  let dateString = "04/03/1997"
   var now = new Date();
   var today = new Date(now.getYear(), now.getMonth(), now.getDate());
 
