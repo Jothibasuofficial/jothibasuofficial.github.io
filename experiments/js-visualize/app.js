@@ -67,7 +67,7 @@ const DICTIONARY = {
 };
 
 const PRESETS = {
-  primitives: `// 1. Primitive Allocations & Reassignments\nlet player = "Jothibasu";\nlet powerLevel = 9000;\n\npowerLevel += 500;\nconsole.log(player + " power is now " + powerLevel);`,
+  primitives: `// 1. Primitive Allocations & Reassignments\nlet player = "Goku";\nlet powerLevel = 9000;\n\npowerLevel += 500;\nconsole.log(player + " power is now " + powerLevel);`,
   
   loops: `// 2. Loop Mutations and Linear Traversal Flow\nconst tasks = ["🔮 Charge", "🛡️ Defend"];\n\nfor (let j = 0; j < tasks.length; j++) {\n  let currentAction = "Executing: " + tasks[j];\n  console.log(currentAction);\n}`,
   

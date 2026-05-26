@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MongoQuery Architect — Explain Plan Visualizer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root.dark {
+      --bg: #0b0f19;
+      --bg-alt: #121826;
+      --bg-panel: #0f1623;
+      --border: #1e2d45;
+      --text: #f1f5f9;
+      --muted: #64748b;
+      --subtle: #1e293b;
+      --editor-bg: #070c15;
+    }
+
+    :root.light {
+      --bg: #f8fafc;
+      --bg-alt: #ffffff;
+      --bg-panel: #f1f5f9;
+      --border: #cbd5e1;
+      --text: #0f172a;
+      --muted: #475569;
+      --subtle: #e2e8f0;
+      --editor-bg: #f1f5f9;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .brand-grad {
+      background: linear-gradient(135deg, #1345e6 0%, #ed239f 100%);
+    }
+
+    .brand-grad-text {
+      background: linear-gradient(90deg, #1345e6, #ed239f);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    #query-editor {
+      background: var(--editor-bg);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      resize: none;
+      outline: none;
+      tab-size: 2;
+      border: none;
+      padding: 16px;
+      width: 100%;
+      height: 100%;
+      cursor: not-allowed;
+      opacity: 0.75;
+    }
+
+    .link-path {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 2.5px;
+      transition: stroke 0.2s;
+    }
+
+    .stat-card {
+      background: var(--bg-alt);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+
+    .tooltip-box {
+      position: absolute;
+      pointer-events: none;
+      background: #0b0f19;
+      border: 1.5px solid #1345e6;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #f1f5f9;
+      z-index: 1000;
+      max-width: 300px;
+      opacity: 0;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .node-text-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .light .node-text-title {
+      fill: #0f172a !important;
+    }
+
+    .light .node-text-desc {
+      fill: #475569 !important;
+    }
+  </style>
+</head>
+
+<body class="h-screen flex flex-col overflow-hidden antialiased">
+
+  <div id="tooltip" class="tooltip-box"></div>
+
+  <header class="h-16 border-b flex items-center justify-between px-6 shrink-0 z-20 shadow-md"
+    style="background:var(--bg-alt); border-color:var(--border);">
+    <div class="flex items-center gap-3">
+      <div class="h-9 w-9 rounded-xl brand-grad flex items-center justify-center shadow-lg">
+        <i class="fa-solid fa-graduation-cap text-white text-sm"></i>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-extrabold tracking-tight text-sm sm:text-base flex items-center gap-1.5 leading-none mb-0.5">
+          <span class="brand-grad-text">MongoQuery</span>
+          <span style="color:var(--text);">Architect</span>
+        </span>
+        <span class="text-[9px] text-zinc-500 font-bold tracking-widest uppercase mono">Friendly Explanation
+          Engine</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <select id="preset-select"
+        class="mono font-bold text-xs px-3 py-2 rounded-lg border focus:outline-none cursor-pointer shadow-sm transition-all"
+        style="background:var(--bg);color:var(--text);border-color:var(--border);">
+        <option value="ixscan_basic">🟢 Index Scan (Super Fast Query)</option>
+        <option value="collscan_warn">🔴 Collection Scan (Slow Performance Outage Warning)</option>
+        <option value="sort_agg">🟡 Aggregation Sort (High RAM Usage Stage)</option>
+        <option value="complex_lookup">🟣 $lookup Join (Connecting Two Collections Together)</option>
+        <option value="compound_index">🔵 Compound Index (Advanced Multi-Field Strategy)</option>
+      </select>
+
+      <select id="theme-select"
+        class="mono font-bold text-xs px-2.5 py-2 rounded-lg border focus:outline-none cursor-pointer"
+        style="background:var(--bg);color:var(--text);border-color:var(--border);">
+        <option value="light">☀️ Light Mode</option>
+        <option value="dark">🌙 Dark Mode</option>
+      </select>
+
+      <button id="run-btn"
+        class="brand-grad text-white text-xs font-extrabold px-5 py-2 rounded-lg shadow-md hover:brightness-110 active:scale-[0.98] transition-all tracking-wide uppercase mono">
+        <i class="fa-solid fa-play mr-1.5"></i> Analyze Flow
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+
+    <div class="h-1/2 lg:h-full lg:w-[40%] flex flex-col border-b lg:border-b-0 lg:border-r"
+      style="border-color:var(--border);">
+
+      <div class="h-9 flex items-center justify-between px-4 shrink-0 border-b"
+        style="background:var(--bg-alt);border-color:var(--border);">
+        <span class="text-[10px] mono font-bold uppercase tracking-widest text-zinc-400">1. Your Code Snippet (Read
+          Only)</span>
+        <span id="cursor-pos"
+          class="text-[10px] mono font-medium px-2 py-0.5 rounded text-indigo-600 dark:text-indigo-400"
+          style="background:rgba(19,69,230,0.08);">Immutable View</span>
+      </div>
+
+      <div id="editor-container" class="h-[45%] overflow-hidden relative">
+        <div id="line-numbers"
+          class="absolute left-0 top-0 bottom-0 w-12 text-right pr-3.5 pt-4 text-[11px] mono select-none overflow-hidden"
+          style="color:#64748b; background:rgba(0,0,0,0.03); line-height:1.7;"></div>
+        <textarea id="query-editor" readonly spellcheck="false" style="padding-left:60px !important;" autocomplete="off"
+          autocorrect="off"></textarea>
+      </div>
+
+      <div class="flex-1 shrink-0 p-4 border-t flex flex-col overflow-y-auto"
+        style="border-color:var(--border); background:var(--bg-alt);">
+        <div
+          class="text-[10px] mono font-extrabold uppercase tracking-widest mb-2.5 brand-grad-text flex items-center gap-1.5">
+          <i class="fa-solid fa-gauge-high"></i> 2. The Golden Rule Check
+        </div>
+
+        <div id="stats-grid" class="grid grid-cols-3 gap-2.5 mb-3">
+          <div class="stat-card">
+            <div class="text-[9px] mono font-bold uppercase tracking-wider text-zinc-400 mb-0.5">Total Steps</div>
+            <div id="stat-stages" class="text-base font-extrabold text-indigo-600 dark:text-indigo-400">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="text-[9px] mono font-bold uppercase tracking-wider text-zinc-400 mb-0.5">Speed Rating</div>
+            <div id="stat-scan" class="text-[11px] font-black tracking-tight uppercase">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="text-[9px] mono font-bold uppercase tracking-wider text-zinc-400 mb-0.5">Index Used?</div>
+            <div id="stat-index" class="text-[11px] font-bold mono truncate text-zinc-600 dark:text-zinc-300">—</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 h-28 mb-3 min-h-[112px]">
+          <div class="border rounded-xl p-2 flex flex-col justify-center relative bg-black/5"
+            style="border-color:var(--border);">
+            <div class="text-[8px] uppercase mono font-bold text-zinc-500 text-center mb-1">Database Search Efficiency
+              Ratio</div>
+            <div class="flex-1 relative w-full h-full max-h-[85px]">
+              <canvas id="efficiency-chart"></canvas>
+            </div>
+          </div>
+          <div class="border rounded-xl p-2 flex flex-col justify-center relative bg-black/5"
+            style="border-color:var(--border);">
+            <div class="text-[8px] uppercase mono font-bold text-zinc-500 text-center mb-1">Row Scan vs. Row Yield
+              Volumetric</div>
+            <div class="flex-1 relative w-full h-full max-h-[85px]">
+              <canvas id="volume-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div id="warnings-area" class="mt-auto"></div>
+      </div>
+    </div>
+
+    <div class="flex-1 flex flex-col overflow-hidden" style="background:var(--bg);">
+
+      <div class="h-9 flex items-center justify-between px-4 shrink-0 border-b"
+        style="background:var(--bg-alt);border-color:var(--border);">
+        <span class="text-[10px] mono font-bold uppercase tracking-widest text-zinc-400">3. Execution Flow Map (Data
+          flows from bottom up)</span>
+        <div class="flex items-center gap-1">
+          <button id="zoom-in"
+            class="text-[10px] mono font-bold px-2 py-1 rounded border hover:bg-zinc-200 dark:hover:bg-zinc-800/20 text-zinc-600 dark:text-zinc-300 shadow-sm"
+            style="border-color:var(--border);"><i class="fa-solid fa-plus"></i></button>
+          <button id="zoom-out"
+            class="text-[10px] mono font-bold px-2 py-1 rounded border hover:bg-zinc-200 dark:hover:bg-zinc-800/20 text-zinc-600 dark:text-zinc-300 shadow-sm"
+            style="border-color:var(--border);"><i class="fa-solid fa-minus"></i></button>
+          <button id="reset-zoom"
+            class="text-[10px] mono font-bold px-2 py-1 rounded border hover:bg-zinc-200 dark:hover:bg-zinc-800/20 text-zinc-600 dark:text-zinc-300 shadow-sm"
+            style="border-color:var(--border);"><i class="fa-solid fa-arrows-to-dot"></i> Reset</button>
+        </div>
+      </div>
+
+      <div
+        class="flex items-center gap-3 px-4 py-2 shrink-0 border-b overflow-x-auto scrollbar-none bg-zinc-100 dark:bg-zinc-950/20"
+        style="border-color:var(--border);">
+        <span class="text-[9px] mono font-bold uppercase tracking-wider text-zinc-500 whitespace-nowrap">Step
+          Types:</span>
+        <div class="flex gap-2.5 flex-wrap text-zinc-600 dark:text-zinc-300">
+          <span class="flex items-center gap-1 text-[9px] mono font-bold"><span
+              class="h-2 w-2 rounded bg-red-500 shadow-sm"></span>COLLSCAN (Bad)</span>
+          <span class="flex items-center gap-1 text-[9px] mono font-bold"><span
+              class="h-2 w-2 rounded bg-emerald-500 shadow-sm"></span>IXSCAN (Great)</span>
+          <span class="flex items-center gap-1 text-[9px] mono font-bold"><span
+              class="h-2 w-2 rounded bg-blue-500 shadow-sm"></span>FETCH</span>
+          <span class="flex items-center gap-1 text-[9px] mono font-bold"><span
+              class="h-2 w-2 rounded bg-amber-500 shadow-sm"></span>SORT (Risky)</span>
+          <span class="flex items-center gap-1 text-[9px] mono font-bold"><span
+              class="h-2 w-2 rounded bg-purple-500 shadow-sm"></span>PROJECTION</span>
+        </div>
+      </div>
+
+      <div id="svg-container" class="flex-1 overflow-hidden relative select-none bg-zinc-950/5">
+        <svg id="plan-svg" class="w-full h-full"></svg>
+      </div>
+
+      <div id="stage-detail" class="shrink-0 border-t px-6 py-4 shadow-2xl relative bg-zinc-50 dark:bg-zinc-900/40"
+        style="border-color:var(--border); min-height:160px;">
+        <div
+          class="text-[10px] mono font-extrabold uppercase tracking-widest mb-2 text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-graduation-cap"></i> 4. Friendly Code Review Explanation
+        </div>
+        <div id="stage-detail-content" class="text-xs transition-all">
+          <p class="text-zinc-500 dark:text-zinc-400 leading-relaxed italic">Click any stage box inside the map grid
+            path above. A senior developer plain-English code review breakdown statement will instantly populate right
+            here.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

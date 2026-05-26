@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,35 +8,61 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <style>
-    /* ABSOLUTE CONTRAST CONFIGURATION ENGINE - v4 Compliant */
+    /* SYSTEM CONTRAST MATRIX */
     :root {
-      --bg-main: #f8fafc;        
-      --bg-card: #ffffff;        
-      --bg-incubation: #f1f5f9;  /* Crisp slate tint for clear grid structure */
-      --text-main: #0f172a;      /* Rich Midnight Slate */
-      --text-muted: #334155;     /* High-contrast charcoal text */
-      --text-hidden: #475569;    /* Visible slate gray for structural subtitles */
-      --border-color: #cbd5e1;   /* Solid bounding grid lines */
-      --header-bg: #ffffff;      
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-incubation: #f1f5f9;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-hidden: #64748b;
+      --border-color: #cbd5e1;
+      --header-bg: #ffffff;
       --orbital-1: rgba(99, 102, 241, 0.08);
       --orbital-2: rgba(236, 72, 153, 0.08);
+
+      /* Semantic Readability Tokens */
+      --badge-live-bg: rgba(16, 185, 129, 0.1);
+      --badge-live-text: #047857;
+      --nonlive-card-bg: #f8fafc;
+      --nonlive-border: #e2e8f0;
+      --nonlive-title: #64748b;
+      --nonlive-desc: #475569;
+      --nonlive-icon-bg: #e2e8f0;
+      --nonlive-icon-text: #94a3b8;
+      --nonlive-btn-bg: #f1f5f9;
+      --nonlive-btn-text: #64748b;
     }
 
     .dark {
-      --bg-main: #020617;        
-      --bg-card: #0f172a; 
-      --bg-incubation: #1e293b;
-      --text-main: #f8fafc;      
-      --text-muted: #94a3b8;     
-      --text-hidden: #64748b;    
-      --border-color: #1e293b;   
+      --bg-main: #020617;
+      --bg-card: #0f172a;
+      --bg-incubation: #0b0f19;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-hidden: #64748b;
+      --border-color: #1e293b;
       --header-bg: rgba(2, 6, 23, 0.7);
       --orbital-1: rgba(99, 102, 241, 0.14);
       --orbital-2: rgba(236, 72, 153, 0.14);
+
+      /* High Readability Dark Variable Fixes */
+      --badge-live-bg: rgba(52, 211, 153, 0.15);
+      --badge-live-text: #34d399;
+      --nonlive-card-bg: #090d16;
+      --nonlive-border: #1e293b;
+      --nonlive-title: #94a3b8;
+      --nonlive-desc: #64748b;
+      --nonlive-icon-bg: #1e293b;
+      --nonlive-icon-text: #475569;
+      --nonlive-btn-bg: #111726;
+      --nonlive-btn-text: #64748b;
     }
 
     body {
@@ -44,20 +71,89 @@
       color: var(--text-main);
       transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease;
     }
-    .font-mono { font-family: 'JetBrains Mono', monospace; }
-    
-    /* Strict Variable Overrides */
-    .theme-card { background-color: var(--bg-card); border-color: var(--border-color); }
-    .theme-incubation { background-color: var(--bg-incubation); border-color: var(--border-color); }
-    .theme-text-main { color: var(--text-main) !important; }
-    .theme-text-muted { color: var(--text-muted) !important; }
-    .theme-text-hidden { color: var(--text-hidden) !important; }
-    .theme-border { border-color: var(--border-color); }
-    .theme-header { background-color: var(--header-bg); border-color: var(--border-color); }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .theme-card {
+      background-color: var(--bg-card);
+      border-color: var(--border-color);
+    }
+
+    .theme-text-main {
+      color: var(--text-main) !important;
+    }
+
+    .theme-text-muted {
+      color: var(--text-muted) !important;
+    }
+
+    .theme-text-hidden {
+      color: var(--text-hidden) !important;
+    }
+
+    .theme-border {
+      border-color: var(--border-color);
+    }
+
+    .theme-header {
+      background-color: var(--header-bg);
+      border-color: var(--border-color);
+    }
+
+    /* Mapping Component Classes */
+    .badge-live-engine {
+      background-color: var(--badge-live-bg) !important;
+      color: var(--badge-live-text) !important;
+    }
+
+    .nonlive-wrapper {
+      background-color: var(--nonlive-card-bg) !important;
+      border-color: var(--nonlive-border) !important;
+    }
+
+    .nonlive-title-text {
+      color: var(--nonlive-title) !important;
+    }
+
+    .nonlive-desc-text {
+      color: var(--nonlive-desc) !important;
+    }
+
+    .nonlive-icon-wrapper {
+      background-color: var(--nonlive-icon-bg) !important;
+      color: var(--nonlive-icon-text) !important;
+    }
+
+    .nonlive-btn-engine {
+      background-color: var(--nonlive-btn-bg) !important;
+      border-color: var(--nonlive-border) !important;
+      color: var(--nonlive-btn-text) !important;
+    }
+
+    /* 🎨 HIGH-LEGIBILITY BRAND COLOR MATRIX ENGINE */
+    .brand-interactive-box {
+      display: inline-block;
+      position: relative;
+    }
+
+    .brand-word {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .brand-char {
+      display: inline-block;
+      color: var(--text-main);
+      transition: color 0.35s cubic-bezier(0.215, 0.610, 0.355, 1);
+      will-change: color;
+    }
 
     .brand-glow {
       transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .brand-glow:hover {
       transform: translateY(-6px) scale(1.01);
       box-shadow: 0 22px 40px -15px rgba(237, 35, 159, 0.15);
@@ -65,52 +161,108 @@
     }
 
     @keyframes float-slow {
-      0%, 100% { transform: translateY(0px) scale(1); }
-      50% { transform: translateY(-20px) scale(1.08); }
-    }
-    @keyframes float-reverse {
-      0%, 100% { transform: translateY(0px) scale(1.05); }
-      50% { transform: translateY(15px) scale(0.95); }
-    }
-    @keyframes shimmer-slow {
-      0% { opacity: 0.7; }
-      50% { opacity: 1; }
-      100% { opacity: 0.7; }
-    }
-    @keyframes pulse-subtle {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.03); opacity: 0.95; }
+
+      0%,
+      100% {
+        transform: translateY(0px) scale(1);
+      }
+
+      50% {
+        transform: translateY(-20px) scale(1.08);
+      }
     }
 
-    .animate-float { animation: float-slow 9s ease-in-out infinite; }
-    .animate-float-delayed { animation: float-reverse 13s ease-in-out infinite; }
-    .animate-shimmer { animation: shimmer-slow 4s ease-in-out infinite; }
-    .animate-pulse-subtle { animation: pulse-subtle 3s ease-in-out infinite; }
+    @keyframes float-reverse {
+
+      0%,
+      100% {
+        transform: translateY(0px) scale(1.05);
+      }
+
+      50% {
+        transform: translateY(15px) scale(0.95);
+      }
+    }
+
+    @keyframes shimmer-slow {
+      0% {
+        opacity: 0.7;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes pulse-subtle {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.03);
+        opacity: 0.95;
+      }
+    }
+
+    .animate-float {
+      animation: float-slow 9s ease-in-out infinite;
+    }
+
+    .animate-float-delayed {
+      animation: float-reverse 13s ease-in-out infinite;
+    }
+
+    .animate-shimmer {
+      animation: shimmer-slow 4s ease-in-out infinite;
+    }
+
+    .animate-pulse-subtle {
+      animation: pulse-subtle 3s ease-in-out infinite;
+    }
   </style>
 </head>
+
 <body class="min-h-screen w-screen flex flex-col relative overflow-x-hidden selection:bg-pink-500/20">
 
-  <div class="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] rounded-full blur-[140px] pointer-events-none animate-float" style="background-color: var(--orbital-1);"></div>
-  <div class="absolute bottom-[-5%] right-[-5%] w-[50%] h-[50%] rounded-full blur-[140px] pointer-events-none animate-float-delayed" style="background-color: var(--orbital-2);"></div>
+  <div class="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] rounded-full blur-[140px] pointer-events-none animate-float"
+    style="background-color: var(--orbital-1);"></div>
+  <div
+    class="absolute bottom-[-5%] right-[-5%] w-[50%] h-[50%] rounded-full blur-[140px] pointer-events-none animate-float-delayed"
+    style="background-color: var(--orbital-2);"></div>
 
-  <header class="h-16 w-full border-b theme-header flex items-center justify-between px-6 md:px-12 z-50 shrink-0 backdrop-blur-md sticky top-0 transition-colors duration-300">
+  <header
+    class="h-16 w-full border-b theme-header flex items-center justify-between px-6 md:px-12 z-50 shrink-0 backdrop-blur-md sticky top-0 transition-colors duration-300">
     <div class="flex items-center space-x-3 group cursor-pointer">
-      <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-pink-600 to-indigo-600 flex items-center justify-center font-black text-white text-base shadow-md transition-transform duration-500 group-hover:rotate-12 group-hover:scale-105">
+      <div
+        class="h-9 w-9 rounded-xl bg-gradient-to-tr from-pink-600 to-indigo-600 flex items-center justify-center font-black text-white text-base shadow-md transition-transform duration-500 group-hover:rotate-12 group-hover:scale-105">
         JB
       </div>
       <div class="text-sm font-extrabold tracking-tight font-mono uppercase transition-all theme-text-main">
-        <span class="text-pink-500 text-base">J</span><span class="text-indigo-600 dark:text-indigo-400 text-base">B</span> experiments
+        <span class="text-pink-500 text-base">J</span><span
+          class="text-indigo-600 dark:text-indigo-400 text-base">B</span> experiments
       </div>
     </div>
-    
+
     <div class="flex items-center space-x-6">
-      <div class="hidden sm:flex items-center space-x-2 text-[11px] font-mono bg-slate-200 dark:bg-slate-900 px-3 py-1 rounded-full border border-slate-300 dark:border-slate-800 shadow-xs animate-shimmer">
+      <div
+        class="hidden sm:flex items-center space-x-2 text-[11px] font-mono bg-slate-200 dark:bg-slate-900 px-3 py-1 rounded-full border border-slate-300 dark:border-slate-800 shadow-xs animate-shimmer">
         <span class="h-1.5 w-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400 animate-pulse"></span>
         <span class="text-slate-900 dark:text-slate-300 font-extrabold">Environment Node Live</span>
       </div>
-      
-      <button id="theme-toggle-btn" class="relative inline-flex h-8 w-14 items-center rounded-full bg-slate-200 dark:bg-slate-800 transition-all duration-300 cursor-pointer focus:outline-none border border-slate-400/40 dark:border-slate-700/50 shadow-inner hover:scale-105 active:scale-95" aria-label="Toggle Theme Mode">
-        <span id="toggle-thumb" class="inline-block h-6 w-6 transform rounded-full bg-white dark:bg-slate-950 shadow-md transition-transform duration-300 flex items-center justify-center text-[11px]">
+
+      <button id="theme-toggle-btn"
+        class="relative inline-flex h-8 w-14 items-center rounded-full bg-slate-200 dark:bg-slate-800 transition-all duration-300 cursor-pointer focus:outline-none border border-slate-400/40 dark:border-slate-700/50 shadow-inner hover:scale-105 active:scale-95"
+        aria-label="Toggle Theme Mode">
+        <span id="toggle-thumb"
+          class="inline-block h-6 w-6 transform rounded-full bg-white dark:bg-slate-950 shadow-md transition-transform duration-300 flex items-center justify-center text-[11px]">
           <i id="theme-icon" class="fa-solid fa-sun text-amber-500 transition-all"></i>
         </span>
       </button>
@@ -118,95 +270,224 @@
   </header>
 
   <main class="flex-1 max-w-7xl w-full mx-auto px-6 py-12 md:py-16 flex flex-col justify-center z-10">
-    
-    <div class="text-center max-w-3xl mx-auto mb-14 md:mb-20 opacity-0 transform translate-y-4 transition-all duration-700 ease-out" id="hero-section">
-      <div class="inline-flex items-center space-x-2 bg-pink-500/10 border border-pink-500/20 px-3 py-1 rounded-full text-pink-700 dark:text-pink-400 text-xs font-semibold mb-6 tracking-wide uppercase transition-all duration-300 hover:scale-105 hover:bg-pink-500/15 animate-pulse-subtle">
-        <i class="fa-solid fa-flask-vial text-[10px]"></i>
-        <span>Active Lab Infrastructure</span>
+
+    <div
+      class="text-center max-w-3xl mx-auto mb-14 md:mb-20 opacity-0 transform translate-y-4 transition-all duration-700 ease-out"
+      id="hero-section">
+      <div
+        class="inline-flex items-center space-x-2 bg-pink-500/10 border border-pink-500/20 px-3 py-1 rounded-full text-pink-700 dark:text-pink-400 text-xs font-semibold mb-6 tracking-wide uppercase transition-all duration-300 hover:scale-105 hover:bg-pink-500/15 animate-pulse-subtle">
+        <i class="fa-solid fa-graduation-cap text-[10px]"></i>
+        <span>Foundational Sandbox Runtimes</span>
       </div>
-      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-[1.15] theme-text-main">
-        Interactive Sandboxes for <br>
-        <span class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent bg-[size:200%] transition-all">Creative Engineers</span>
+      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-[1.2] theme-text-main">
+        Interactive Playgrounds for <br>
+        <span id="brand-trigger" class="brand-interactive-box pb-2 cursor-default select-none">
+          <span class="brand-word">
+            <span class="brand-char">G</span><span class="brand-char">r</span><span class="brand-char">o</span><span
+              class="brand-char">w</span><span class="brand-char">i</span><span class="brand-char">n</span><span
+              class="brand-char">g</span>
+          </span>
+          &nbsp;
+          <span class="brand-word">
+            <span class="brand-char">E</span><span class="brand-char">n</span><span class="brand-char">g</span><span
+              class="brand-char">i</span><span class="brand-char">n</span><span class="brand-char">e</span><span
+              class="brand-char">e</span><span class="brand-char">r</span><span class="brand-char">s</span>
+          </span>
+        </span>
       </h1>
       <p class="theme-text-muted text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed">
-        Explore decoupled telemetry nodes designed to trace execution call stacks, memory object lifetimes, and async pipeline logic explicitly step-by-step.
+        Visual simulation utilities operating completely inside your browser tab. Isolate core computer science data
+        structures and full-stack execution mechanics instantly.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch mb-16" id="matrix-grid">
-      
-      <div class="brand-glow theme-card opacity-0 transform translate-y-8 transition-all duration-700 group relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs hover:shadow-xl" style="transition-delay: 150ms;">
-        <div class="absolute top-0 right-0 h-24 w-24 bg-gradient-to-bl from-pink-500/5 to-transparent rounded-tr-2xl rounded-bl-full pointer-events-none"></div>
-        
+
+      <!-- ACTIVE: JS-Visualizer Pro Card -->
+      <div
+        class="brand-glow theme-card opacity-0 transform translate-y-8 transition-all duration-700 group relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs hover:shadow-xl"
+        style="transition-delay: 100ms;">
+        <div
+          class="absolute top-0 right-0 h-24 w-24 bg-gradient-to-bl from-pink-500/5 to-transparent rounded-tr-2xl rounded-bl-full pointer-events-none">
+        </div>
         <div>
-          <div class="h-12 w-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500 text-xl mb-6 shadow-xs transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <div
+            class="h-12 w-12 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-500 text-xl mb-6 shadow-xs transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
+            <i class="fa-solid fa-code-branch"></i>
           </div>
           <div class="flex items-center justify-between mb-2">
-            <h2 class="text-lg font-bold transition-colors theme-text-main group-hover:text-pink-600 dark:group-hover:text-pink-400">JS-Visualizer Pro</h2>
-            <span class="text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-800 dark:text-emerald-400 animate-pulse">Ready</span>
+            <h2
+              class="text-lg font-bold transition-colors theme-text-main group-hover:text-pink-600 dark:group-hover:text-pink-400">
+              JS-Visualizer Pro</h2>
+            <span
+              class="text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md border border-emerald-500/20 badge-live-engine animate-pulse">Live
+              Now</span>
           </div>
           <p class="theme-text-muted text-xs leading-relaxed mb-8">
-            An advanced thread-safe execution analyzer mapping call stacks, memory heap mutations, and macro/microtask event loop queues. Supports custom script parsing smoothly.
+            An advanced runtime analyzer mapping micro/macro task event loops, call stacks, and target memory heap
+            updates. Built to deconstruct asynchronous JavaScript logic step-by-step.
           </p>
         </div>
-
-        <a href="js-visualize/index.html" class="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-pink-600 to-indigo-600 hover:from-pink-500 hover:to-indigo-500 text-white font-semibold text-xs py-3 px-4 rounded-xl shadow-md transition-all transform active:scale-[0.98] group/btn">
-          <span>Launch Workspace Console</span>
-          <i class="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-1.5"></i>
+        <a href="js-visualize/index.html"
+          class="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-pink-600 to-indigo-600 hover:from-pink-500 hover:to-indigo-500 text-white font-semibold text-xs py-3 px-4 rounded-xl shadow-md transition-all transform active:scale-[0.98] group/btn">
+          <span>Open Debugger Console</span>
+          <i
+            class="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-1.5"></i>
         </a>
       </div>
 
-      <div class="theme-incubation opacity-0 transform translate-y-8 transition-all duration-700 relative rounded-2xl p-6 border theme-border flex flex-col justify-between shadow-xs select-none" style="transition-delay: 300ms;">
+      <!-- ACTIVE: MongoQuery Architect Card -->
+      <div
+        class="brand-glow theme-card opacity-0 transform translate-y-8 transition-all duration-700 group relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs hover:shadow-xl"
+        style="transition-delay: 200ms;">
+        <div
+          class="absolute top-0 right-0 h-24 w-24 bg-gradient-to-bl from-emerald-500/5 to-transparent rounded-tr-2xl rounded-bl-full pointer-events-none">
+        </div>
         <div>
-          <div class="h-12 w-12 rounded-xl bg-slate-200 dark:bg-indigo-500/5 flex items-center justify-center text-slate-600 dark:text-indigo-300 text-xl mb-6">
-            <i class="fa-solid fa-network-wired"></i>
+          <div
+            class="h-12 w-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 text-xl mb-6 shadow-xs transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
+            <i class="fa-solid fa-leaf"></i>
           </div>
           <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-bold text-slate-700 dark:text-slate-400">Regex Structural Profiler</h3>
-            <span class="text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md bg-slate-300 text-slate-800 dark:bg-slate-900 dark:text-slate-400 border border-slate-400 dark:border-slate-800">Late 2026</span>
+            <h2
+              class="text-lg font-bold transition-colors theme-text-main group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
+              MongoQuery Architect</h2>
+            <span
+              class="text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md border border-emerald-500/20 badge-live-engine animate-pulse">Live
+              Now</span>
           </div>
-          <p class="text-slate-700 dark:text-slate-400 text-xs font-medium leading-relaxed mb-8">
-            A state-machine compiler that compiles expressions into hierarchical node match blocks to test performance bottlenecks and track backtracking patterns instantly.
+          <p class="theme-text-muted text-xs leading-relaxed mb-8">
+            A D3.js powered execution-plan mapper. Visualizes the "Explain Plan" tree structures to help engineering
+            teams instantly catch slow collection sweeps and fix database indexing gaps.
           </p>
         </div>
-        <div class="w-full inline-flex items-center justify-center space-x-2 bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400 font-bold text-xs py-3 px-4 rounded-xl cursor-not-allowed">
-          <i class="fa-solid fa-lock text-[10px] mr-1"></i> Incubating Application Module
+        <a href="mongo-architect/index.html"
+          class="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 text-white font-semibold text-xs py-3 px-4 rounded-xl shadow-md transition-all transform active:scale-[0.98] group/btn">
+          <span>Launch Plan Visualizer</span>
+          <i
+            class="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-1.5"></i>
+        </a>
+      </div>
+
+      <!-- INACTIVE: Call Stack vs Memory Heap (In Incubation) -->
+      <div
+        class="opacity-0 transform translate-y-8 transition-all duration-700 relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs select-none nonlive-wrapper"
+        style="transition-delay: 250ms;">
+        <div>
+          <div class="h-12 w-12 rounded-xl flex items-center justify-center text-xl mb-6 nonlive-icon-wrapper">
+            <i class="fa-solid fa-cubes"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg font-bold nonlive-title-text">Stack vs Heap Arena</h3>
+            <span
+              class="text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border nonlive-title-text">Late
+              2026</span>
+          </div>
+          <p class="text-xs font-medium leading-relaxed mb-8 nonlive-desc-text">
+            A visual baseline memory tracker showing how fixed values sit in the fast stack while complex objects get
+            reference pointers inside the dynamic heap matrix.
+          </p>
+        </div>
+        <div
+          class="w-full inline-flex items-center justify-center space-x-2 border font-bold text-xs py-3 px-4 rounded-xl cursor-not-allowed nonlive-btn-engine">
+          <i class="fa-solid fa-lock text-[10px] mr-1"></i> Under Development
         </div>
       </div>
 
-      <div class="theme-incubation opacity-0 transform translate-y-8 transition-all duration-700 relative rounded-2xl p-6 border theme-border flex flex-col justify-between shadow-xs select-none" style="transition-delay: 450ms;">
+      <!-- INACTIVE: MERN Data-Flow Lifecycle (In Incubation) -->
+      <div
+        class="opacity-0 transform translate-y-8 transition-all duration-700 relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs select-none nonlive-wrapper"
+        style="transition-delay: 300ms;">
         <div>
-          <div class="h-12 w-12 rounded-xl bg-slate-200 dark:bg-amber-500/5 flex items-center justify-center text-slate-600 dark:text-amber-300 text-xl mb-6">
-            <i class="fa-solid fa-database"></i>
+          <div class="h-12 w-12 rounded-xl flex items-center justify-center text-xl mb-6 nonlive-icon-wrapper">
+            <i class="fa-solid fa-arrows-spin"></i>
           </div>
           <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-bold text-slate-900 dark:text-slate-400">SQL Sandbox Visualizer</h3>
-            <span class="text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md bg-slate-300 text-slate-800 dark:bg-slate-900 dark:text-slate-400 border border-slate-400 dark:border-slate-800">In Dev</span>
+            <h3 class="text-lg font-bold nonlive-title-text">MERN Lifecycle Map</h3>
+            <span
+              class="text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border nonlive-title-text">Late
+              2026</span>
           </div>
-          <p class="text-slate-700 dark:text-slate-400 text-xs font-medium leading-relaxed mb-8">
-            An in-memory relational workspace mapping join architectures, indexing steps, and cost footprints to visualize query optimizations clearly.
+          <p class="text-xs font-medium leading-relaxed mb-8 nonlive-desc-text">
+            An illustrative lifecycle track showing how data flows from React state modifications, down through Express
+            APIs, to final MongoDB document hooks.
           </p>
         </div>
-        <div class="w-full inline-flex items-center justify-center space-x-2 bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-400 font-bold text-xs py-3 px-4 rounded-xl cursor-not-allowed">
-          <i class="fa-solid fa-lock text-[10px] mr-1"></i> Incubating Application Module
+        <div
+          class="w-full inline-flex items-center justify-center space-x-2 border font-bold text-xs py-3 px-4 rounded-xl cursor-not-allowed nonlive-btn-engine">
+          <i class="fa-solid fa-lock text-[10px] mr-1"></i> Under Development
+        </div>
+      </div>
+
+      <!-- INACTIVE: Basic Sorting Visualizer (Planning) -->
+      <div
+        class="opacity-0 transform translate-y-8 transition-all duration-700 relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs select-none nonlive-wrapper"
+        style="transition-delay: 350ms;">
+        <div>
+          <div class="h-12 w-12 rounded-xl flex items-center justify-center text-xl mb-6 nonlive-icon-wrapper">
+            <i class="fa-solid fa-chart-simple"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg font-bold nonlive-title-text">Sorting Algorithm Lab</h3>
+            <span
+              class="text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border nonlive-title-text">Planning</span>
+          </div>
+          <p class="text-xs font-medium leading-relaxed mb-8 nonlive-desc-text">
+            A fundamental sandbox illustrating loop index pointers swapping value locations inside datasets during basic
+            Bubble and Insertion sort passes.
+          </p>
+        </div>
+        <div
+          class="w-full inline-flex items-center justify-center space-x-2 border font-bold text-xs py-3 px-4 rounded-xl cursor-not-allowed nonlive-btn-engine">
+          <i class="fa-solid fa-flask text-[10px] mr-1"></i> Concept Phase
+        </div>
+      </div>
+
+      <!-- INACTIVE: DOM Tree Explorer (Planning) -->
+      <div
+        class="opacity-0 transform translate-y-8 transition-all duration-700 relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs select-none nonlive-wrapper"
+        style="transition-delay: 400ms;">
+        <div>
+          <div class="h-12 w-12 rounded-xl flex items-center justify-center text-xl mb-6 nonlive-icon-wrapper">
+            <i class="fa-solid fa-sitemap"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-lg font-bold nonlive-title-text">DOM Tree Breakdown</h3>
+            <span
+              class="text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border nonlive-title-text">Planning</span>
+          </div>
+          <p class="text-xs font-medium leading-relaxed mb-8 nonlive-desc-text">
+            A plain-English node inspector demonstrating how changing HTML text configurations alters nodes down the
+            document tree mapping hierarchy.
+          </p>
+        </div>
+        <div
+          class="w-full inline-flex items-center justify-center space-x-2 border font-bold text-xs py-3 px-4 rounded-xl cursor-not-allowed nonlive-btn-engine">
+          <i class="fa-solid fa-flask text-[10px] mr-1"></i> Concept Phase
         </div>
       </div>
 
     </div>
 
-    <section class="max-w-4xl mx-auto w-full theme-card border rounded-2xl p-6 text-center shadow-xs transition-all duration-300 hover:border-indigo-500/20 hover:shadow-md">
-      <h4 class="text-xs font-bold font-mono uppercase tracking-widest theme-text-hidden mb-2">Decoupled Architecture Verification Node</h4>
+    <section
+      class="max-w-4xl mx-auto w-full theme-card border rounded-2xl p-6 text-center shadow-xs transition-all duration-300 hover:border-indigo-500/20 hover:shadow-md">
+      <h4 class="text-xs font-bold font-mono uppercase tracking-widest theme-text-hidden mb-2">Decoupled Architecture
+        Verification Node</h4>
       <p class="theme-text-muted text-xs max-w-xl mx-auto leading-relaxed">
-        All modules executed under the <span class="font-semibold theme-text-main">JB experiments</span> umbrella evaluate code instructions inside browser runtime sandbox matrices to ensure zero persistent external storage footprints.
+        All modules executed under the <span class="font-semibold theme-text-main">JB experiments</span> umbrella
+        evaluate code instructions inside browser runtime sandbox matrices to ensure zero persistent external storage
+        footprints.
       </p>
     </section>
 
   </main>
 
-  <footer class="w-full border-t theme-border theme-header backdrop-blur-md shrink-0 font-mono z-20 transition-colors duration-300 mt-auto min-h-[3.5rem] flex items-center">
-    <div class="max-w-7xl w-full mx-auto px-6 md:px-12 flex items-center justify-center text-xs theme-text-muted text-center py-4 md:py-0">
-      <span class="theme-text-muted">&copy; 2026 <span class="font-bold text-pink-600 dark:text-pink-500">J</span><span class="font-bold text-indigo-600 dark:text-indigo-400">B</span> experiments. All rights reserved.</span>
+  <footer
+    class="w-full border-t theme-border theme-header backdrop-blur-md shrink-0 font-mono z-20 transition-colors duration-300 mt-auto min-h-[3.5rem] flex items-center">
+    <div
+      class="max-w-7xl w-full mx-auto px-6 md:px-12 flex items-center justify-center text-xs theme-text-muted text-center py-4 md:py-0">
+      <span class="theme-text-muted">&copy; 2026 <span class="font-bold text-pink-600 dark:text-pink-500">J</span><span
+          class="font-bold text-indigo-600 dark:text-indigo-400">B</span> experiments. All rights reserved.</span>
     </div>
   </footer>
 
@@ -227,6 +508,50 @@
       });
     });
 
+    /* 🌊 BRAND PROXIMITY WAVE ENGINE (PURE COLOR INTERACTION) */
+    const brandContainer = document.getElementById('brand-trigger');
+    const brandChars = document.querySelectorAll('.brand-char');
+
+    window.addEventListener('mousemove', (e) => {
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+
+      brandChars.forEach((char, index) => {
+        const charRect = char.getBoundingClientRect();
+        const charCenterX = charRect.left + charRect.width / 2;
+        const charCenterY = charRect.top + charRect.height / 2;
+
+        const deltaX = mouseX - charCenterX;
+        const deltaY = mouseY - charCenterY;
+        const totalDistance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        // Proximity radius zone: 140px
+        if (totalDistance < 140) {
+          const powerIntensity = (140 - totalDistance) / 140;
+
+          // Generate an elegant shifting gradient sweep along the brand colors based on character position
+          if (index < 7) {
+            // "Growing" words shift to a hot pink brand state
+            char.style.color = `mix(#ec4899, var(--text-main), ${powerIntensity * 100}%)`;
+            char.style.color = '#ec4899';
+          } else {
+            // "Engineers" words shift to an indigo brand state
+            char.style.color = `mix(#6366f1, var(--text-main), ${powerIntensity * 100}%)`;
+            char.style.color = '#6366f1';
+          }
+        } else {
+          // Clear styles and fallback gracefully to default CSS theme states
+          char.style.color = '';
+        }
+      });
+    });
+
+    brandContainer.addEventListener('mouseleave', () => {
+      brandChars.forEach((char) => {
+        char.style.color = '';
+      });
+    });
+
     themeToggleBtn.addEventListener('click', () => {
       const currentTheme = htmlEl.classList.contains('dark') ? 'dark' : 'light';
       if (currentTheme === 'dark') {
@@ -244,11 +569,16 @@
       if (mode === 'dark') {
         toggleThumb.style.transform = 'translateX(24px)';
         themeIcon.className = 'fa-solid fa-moon text-indigo-400 scale-110';
-        htmlEl.classList.add('dark'); 
+        htmlEl.classList.add('dark');
       } else {
         toggleThumb.style.transform = 'translateX(0px)';
         themeIcon.className = 'fa-solid fa-sun text-amber-500 scale-100';
         htmlEl.classList.remove('dark');
+      }
+
+      // Clear dynamic color runtime overrides on theme flip to make sure correct text baseline values apply instantly
+      if (typeof brandChars !== 'undefined') {
+        brandChars.forEach(char => char.style.color = '');
       }
     }
 
@@ -257,4 +587,5 @@
   </script>
 
 </body>
+
 </html>
