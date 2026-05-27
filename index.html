@@ -639,6 +639,7 @@
     </div>
     
     <div class="flex items-center space-x-12 text-[10px] font-black uppercase tracking-widest opacity-30">
+      <a href="experiments/index.html" class="hover:opacity-100 transition-all">Labs</a>
       <a href="2019/index.html" class="hover:opacity-100 transition-all">Archive 2019</a>
       <a href="2018/index.html" class="hover:opacity-100 transition-all">Archive 2018</a>
     </div>
@@ -670,6 +671,7 @@
       'glukoin-mobile': {
         title: "Glukoin Mobile App",
         subtitle: "Health Data Visualization",
+        isMobile: true,
         desc: "Strategic mobile platform managing lab report ingestion with intuitive visual risk indications. Tracks glucose level fluctuations across timelines to help diabetic patients plan their day better.",
         features: ["Live Lab Status Pushes", "Organized Health Records", "Visual Risk Indications", "Glucose Timeline Tracking", "Insightful Health Metrics"],
         tech: ["React Native", "Node.js", "MySQL", "Sketch", "Zeplin"],
@@ -679,6 +681,7 @@
       '121event': {
         title: "121Event",
         subtitle: "Enterprise Event Automation",
+        isMobile: true,
         desc: "Complete solution to automate conference booking and QR validation. Designed for high-concurrency ticket status monitoring and real-time attendance analytics.",
         features: ["QR Based Ticketing", "Mobile QR Validation", "Live Registration Tracking", "Attendance Analytics", "Paperless Workflow"],
         tech: ["React Native", "JavaScript", "Adobe Illustrator"],
@@ -743,7 +746,7 @@
               
               <h4 class="text-xs font-black uppercase tracking-widest theme-text-main mb-6">Technologies/Tools Used</h4>
               <div class="flex flex-wrap gap-3 mb-12">
-              ${data.tech.map(t => `<span class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-white text-[10px] uppercase tracking-widest">${t}</span>`).join('')}
+              ${data.tech.map(t => `<span class="px-4 py-2 rounded-xl bg-slate-800 dark:bg-slate-950 border border-slate-700 dark:border-slate-800 text-white text-white text-[10px] uppercase tracking-widest">${t}</span>`).join('')}
             </div>
 
               <h4 class="text-xs font-black uppercase tracking-widest theme-text-main mb-6">Core Impact Features</h4>
@@ -768,7 +771,7 @@
 
         <div class="mt-20 pt-20 border-t border-slate-100 dark:border-slate-800">
           <h4 class="text-xs font-black uppercase tracking-widest theme-text-main mb-12 text-center">Project Media Matrix</h4>
-          <div class="space-y-12">
+          <div class="${data.isMobile ? 'grid grid-cols-1 md:grid-cols-3 gap-8' : 'space-y-12'}">
             ${data.images.map(img => `<img src="${img}" class="w-full rounded-[48px] border border-slate-100 dark:border-slate-800 shadow-2xl">`).join('')}
           </div>
         </div>
