@@ -170,6 +170,90 @@
       transform: translateY(0);
     }
 
+    .reveal-slide-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-slide-up.reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-slide-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-slide-left.reveal {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-slide-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-slide-right.reveal {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-zoom-in {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-zoom-in.reveal {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .stagger-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .stagger-item.reveal {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .theme-card {
+      position: relative;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
+      overflow: hidden;
+    }
+
+    .theme-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .dark .theme-card::before {
+      background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(129, 140, 248, 0.15), transparent 40%);
+    }
+    .theme-card:hover::before {
+      opacity: 1;
+    }
+
+    .magnetic-wrap {
+      display: inline-block;
+      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .animate-orb, .animate-orb-delayed {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
     .theme-text-main { color: var(--text-main); }
     .theme-text-muted { color: var(--text-muted); }
 
@@ -240,7 +324,7 @@
   <!-- Header -->
   <header class="fixed top-0 w-full h-20 z-50 backdrop-blur-xl border-b" style="background-color: var(--header-bg); border-color: var(--border-color);">
     <div class="max-w-7xl mx-auto h-full px-6 flex items-center justify-between">
-      <div class="flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+      <div class="flex items-center cursor-pointer magnetic-wrap" onclick="window.scrollTo(0,0)">
         <img src="2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo dark:hidden">
         <img src="2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo hidden dark:block">
       </div>
@@ -253,7 +337,7 @@
       </nav>
 
       <div class="flex items-center space-x-4">
-        <button id="theme-toggle-btn" class="h-10 w-10 rounded-2xl flex items-center justify-center border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:border-pink-500 transition-all">
+        <button id="theme-toggle-btn" class="h-10 w-10 rounded-2xl flex items-center justify-center border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:border-pink-500 transition-all magnetic-wrap">
           <i id="theme-icon" class="fa-solid fa-sun text-amber-500"></i>
         </button>
       </div>
@@ -264,12 +348,12 @@
     
     <!-- HERO SECTION -->
     <section id="hero" class="min-h-[60vh] flex flex-col justify-center items-center text-center mb-52">
-      <div class="section-title">
+      <div class="section-title reveal-slide-up">
         <span class="h-[2px] w-8 bg-pink-500"></span>
         <span>Strategic Technology Leadership</span>
         <span class="h-[2px] w-8 bg-blue-500"></span>
       </div>
-      <h1 class="text-6xl md:text-9xl font-black tracking-tighter mb-10 leading-[0.95]">
+      <h1 class="text-6xl md:text-9xl font-black tracking-tighter mb-10 leading-[0.95] reveal-zoom-in">
         Engineering <br>
         <span id="brand-trigger" class="brand-interactive-box pb-4 cursor-default select-none">
           <span class="brand-word">
@@ -277,13 +361,13 @@
           </span>
         </span>
       </h1>
-      <p class="text-xl md:text-2xl font-semibold max-w-3xl text-slate-500 dark:text-slate-400 leading-relaxed mb-16">
+      <p class="text-xl md:text-2xl font-semibold max-w-3xl text-slate-500 dark:text-slate-400 leading-relaxed mb-16 reveal-slide-up">
         Full Stack Engineer & CTO. Building complex infrastructures and high-performing technical solutions for modern industry leaders.
       </p>
       
-      <div class="flex flex-wrap justify-center gap-6">
-        <a href="#projects" class="btn-main">Selected Ecosystems</a>
-        <a href="2019/docs/Jothibasu_New.pdf" download class="btn-outline flex items-center gap-3">
+      <div class="flex flex-wrap justify-center gap-6 reveal-slide-up">
+        <a href="#projects" class="btn-main magnetic-wrap">Selected Ecosystems</a>
+        <a href="2019/docs/Jothibasu_New.pdf" download class="btn-outline flex items-center gap-3 magnetic-wrap">
           Download CV <i class="fa-solid fa-file-pdf opacity-50"></i>
         </a>
       </div>
@@ -291,12 +375,12 @@
 
     <!-- 1. PROJECTS SECTION -->
     <section id="projects" class="mb-52 scroll-mt-32">
-      <div class="section-title"><i class="fa-solid fa-layer-group"></i><span>Impact Matrix</span></div>
-      <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-20">Production Ecosystems</h2>
+      <div class="section-title reveal-slide-left"><i class="fa-solid fa-layer-group"></i><span>Impact Matrix</span></div>
+      <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-20 reveal-slide-up">Production Ecosystems</h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         <!-- Smart Audit -->
-        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer" onclick="openCaseStudy('smartaudit')">
+        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer stagger-item" onclick="openCaseStudy('smartaudit')">
           <div class="overflow-hidden rounded-3xl mb-8 bg-slate-100 dark:bg-slate-800 aspect-video">
             <img src="2019/img/projects/smart-audit/demo.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
           </div>
@@ -310,7 +394,7 @@
           </div>
         </div>
         <!-- Glukoin Mobile App -->
-        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer" onclick="openCaseStudy('glukoin-mobile')">
+        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer stagger-item" onclick="openCaseStudy('glukoin-mobile')">
           <div class="overflow-hidden rounded-3xl mb-8 bg-slate-100 dark:bg-slate-800 aspect-video">
             <img src="2019/img/projects/glukoin-mobile-app/demo.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
           </div>
@@ -324,7 +408,7 @@
           </div>
         </div>
         <!-- 121Event -->
-        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer" onclick="openCaseStudy('121event')">
+        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer stagger-item" onclick="openCaseStudy('121event')">
           <div class="overflow-hidden rounded-3xl mb-8 bg-slate-100 dark:bg-slate-800 aspect-video">
             <img src="2019/img/projects/121Event/demo.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
           </div>
@@ -338,7 +422,7 @@
           </div>
         </div>
         <!-- EDI Portal -->
-        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer" onclick="openCaseStudy('edi')">
+        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer stagger-item" onclick="openCaseStudy('edi')">
           <div class="overflow-hidden rounded-3xl mb-8 bg-slate-100 dark:bg-slate-800 aspect-video">
             <img src="2019/img/projects/edi/demo.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
           </div>
@@ -352,7 +436,7 @@
           </div>
         </div>
         <!-- GLUKOIN WEB -->
-        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer" onclick="openCaseStudy('glukoin-web')">
+        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer stagger-item" onclick="openCaseStudy('glukoin-web')">
           <div class="overflow-hidden rounded-3xl mb-8 bg-slate-100 dark:bg-slate-800 aspect-video">
             <img src="2019/img/projects/glukoin/demo.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
           </div>
@@ -366,7 +450,7 @@
           </div>
         </div>
         <!-- Glukoin LIMS -->
-        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer" onclick="openCaseStudy('glims')">
+        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group cursor-pointer stagger-item" onclick="openCaseStudy('glims')">
           <div class="overflow-hidden rounded-3xl mb-8 bg-slate-100 dark:bg-slate-800 aspect-video">
             <img src="2019/img/projects/glims/demo.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
           </div>
@@ -380,7 +464,7 @@
           </div>
         </div>
         <!-- Strakin Flagship -->
-        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group lg:col-span-1 cursor-pointer" onclick="openCaseStudy('strakin')">
+        <div class="theme-card brand-glow rounded-[40px] p-8 flex flex-col group lg:col-span-1 cursor-pointer stagger-item" onclick="openCaseStudy('strakin')">
           <div class="overflow-hidden rounded-3xl mb-8 bg-slate-100 dark:bg-slate-800 aspect-video">
             <img src="2019/img/projects/strakin/home.png" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
           </div>
@@ -398,10 +482,10 @@
 
     <!-- 2. BLOG SECTION -->
     <section id="blog" class="mb-52 scroll-mt-32">
-      <div class="section-title"><i class="fa-solid fa-pen-nib"></i><span>Thought Leadership</span></div>
+      <div class="section-title reveal-slide-right"><i class="fa-solid fa-pen-nib"></i><span>Thought Leadership</span></div>
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
-        <h2 class="text-4xl md:text-6xl font-black tracking-tighter">Latest Writing</h2>
-        <div class="flex items-center gap-4">
+        <h2 class="text-4xl md:text-6xl font-black tracking-tighter reveal-slide-up">Latest Writing</h2>
+        <div class="flex items-center gap-4 reveal-zoom-in">
            <a href="https://medium.com/@jothibasuofficial" target="_blank" class="h-10 w-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-pink-500 hover:text-white transition-all"><i class="fa-brands fa-medium"></i></a>
            <a href="https://www.linkedin.com/in/jothibasuofficial/" target="_blank" class="h-10 w-10 rounded-full border border-slate-200 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all"><i class="fa-brands fa-linkedin"></i></a>
         </div>
@@ -409,7 +493,7 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Post 1 -->
-        <article class="theme-card writing-card rounded-[32px] p-8 group cursor-pointer" onclick="window.open('https://www.linkedin.com/pulse/engineering-computer-science-what-good-choose-your-career-jothi-basu/')">
+        <article class="theme-card writing-card rounded-[32px] p-8 group cursor-pointer stagger-item" onclick="window.open('https://www.linkedin.com/pulse/engineering-computer-science-what-good-choose-your-career-jothi-basu/')">
           <div class="overflow-hidden rounded-2xl mb-6 bg-slate-100 dark:bg-slate-900 aspect-video">
             <img src="2019/img/blog/engineering.jpeg" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
           </div>
@@ -423,7 +507,7 @@
         </article>
         
         <!-- Post 2 -->
-        <article class="theme-card writing-card rounded-[32px] p-8 group cursor-pointer" onclick="window.open('https://medium.com/@jothibasuofficial/why-there-are-24-hours-in-a-day-and-60-minutes-in-an-hour-b670879cbe99')">
+        <article class="theme-card writing-card rounded-[32px] p-8 group cursor-pointer stagger-item" onclick="window.open('https://medium.com/@jothibasuofficial/why-there-are-24-hours-in-a-day-and-60-minutes-in-an-hour-b670879cbe99')">
           <div class="overflow-hidden rounded-2xl mb-6 bg-slate-100 dark:bg-slate-900 aspect-video">
             <img src="2019/img/blog/time.gif" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
           </div>
@@ -437,7 +521,7 @@
         </article>
 
         <!-- Post 3 -->
-        <article class="theme-card writing-card rounded-[32px] p-8 group cursor-pointer" onclick="window.open('https://learnfromzero.blogspot.com/2016/11/why-c-should-be-your-first-programming.html')">
+        <article class="theme-card writing-card rounded-[32px] p-8 group cursor-pointer stagger-item" onclick="window.open('https://learnfromzero.blogspot.com/2016/11/why-c-should-be-your-first-programming.html')">
           <div class="overflow-hidden rounded-2xl mb-6 bg-slate-100 dark:bg-slate-900 aspect-video">
             <img src="2019/img/blog/c_lang.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000">
           </div>
@@ -453,7 +537,7 @@
 
       <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Palindrome Link -->
-        <div class="theme-card writing-card rounded-[32px] p-6 flex items-center gap-6 group cursor-pointer" onclick="window.open('https://welcometojothibasu.blogspot.com/2017/11/check-if-linked-list-of-integers-is.html')">
+        <div class="theme-card writing-card rounded-[32px] p-6 flex items-center gap-6 group cursor-pointer stagger-item" onclick="window.open('https://welcometojothibasu.blogspot.com/2017/11/check-if-linked-list-of-integers-is.html')">
           <img src="2019/img/blog/linked-list.png" class="h-16 w-16 rounded-xl object-cover grayscale group-hover:grayscale-0 transition-all">
           <div>
             <h4 class="font-black theme-text-main group-hover:text-pink-500 transition-colors">Palindrome Linked List Check</h4>
@@ -461,7 +545,7 @@
           </div>
         </div>
         <!-- LiFi Link -->
-        <div class="theme-card writing-card rounded-[32px] p-6 flex items-center gap-6 group cursor-pointer" onclick="window.open('https://smartupgradersontechnology.blogspot.com/2016/11/data-transfers-at-gigabits-to-terabits.html')">
+        <div class="theme-card writing-card rounded-[32px] p-6 flex items-center gap-6 group cursor-pointer stagger-item" onclick="window.open('https://smartupgradersontechnology.blogspot.com/2016/11/data-transfers-at-gigabits-to-terabits.html')">
           <img src="2019/img/blog/lifi.jpg" class="h-16 w-16 rounded-xl object-cover grayscale group-hover:grayscale-0 transition-all">
           <div>
             <h4 class="font-black theme-text-main group-hover:text-pink-500 transition-colors">Data Transfers at Gigabits to Terabits</h4>
@@ -472,33 +556,33 @@
 
       <!-- Archived Insights Grid -->
       <div class="mt-16 pt-16 border-t border-slate-100 dark:border-slate-800">
-        <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-10 text-center">Archived Digital Assets</h4>
+        <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-10 text-center reveal-slide-up">Archived Digital Assets</h4>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          <a href="https://learnfromzero.blogspot.com/2017/06/math-and-nature.html" target="_blank" class="theme-card rounded-2xl p-6 flex flex-col items-center text-center group hover:border-pink-500 transition-all">
+          <a href="https://learnfromzero.blogspot.com/2017/06/math-and-nature.html" target="_blank" class="theme-card rounded-2xl p-6 flex flex-col items-center text-center group hover:border-pink-500 transition-all stagger-item">
             <div class="h-12 w-12 rounded-xl bg-pink-500/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-infinity text-pink-500 text-lg"></i>
             </div>
             <h5 class="text-[9px] font-black uppercase tracking-widest theme-text-main">Math and Nature</h5>
           </a>
-          <a href="https://learnfromzero.blogspot.com/2016/12/earths-north-end-and-south-end.html" target="_blank" class="theme-card rounded-2xl p-6 flex flex-col items-center text-center group hover:border-indigo-500 transition-all">
+          <a href="https://learnfromzero.blogspot.com/2016/12/earths-north-end-and-south-end.html" target="_blank" class="theme-card rounded-2xl p-6 flex flex-col items-center text-center group hover:border-indigo-500 transition-all stagger-item">
             <div class="h-12 w-12 rounded-xl bg-indigo-500/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-earth-americas text-indigo-500 text-lg"></i>
             </div>
             <h5 class="text-[9px] font-black uppercase tracking-widest theme-text-main">Earth's End Points</h5>
           </a>
-          <a href="https://learnfromzero.blogspot.com/2017/06/algorithms-that-dominate-our-world.html" target="_blank" class="theme-card rounded-2xl p-6 flex flex-col items-center text-center group hover:border-pink-500 transition-all">
+          <a href="https://learnfromzero.blogspot.com/2017/06/algorithms-that-dominate-our-world.html" target="_blank" class="theme-card rounded-2xl p-6 flex flex-col items-center text-center group hover:border-pink-500 transition-all stagger-item">
             <div class="h-12 w-12 rounded-xl bg-pink-500/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-microchip text-pink-500 text-lg"></i>
             </div>
             <h5 class="text-[9px] font-black uppercase tracking-widest theme-text-main">Ruling Algorithms</h5>
           </a>
-          <a href="https://learnfromzero.blogspot.com/2017/02/where-do-deleted-files-go.html" target="_blank" class="theme-card rounded-2xl p-6 flex flex-col items-center text-center group hover:border-indigo-500 transition-all">
+          <a href="https://learnfromzero.blogspot.com/2017/02/where-do-deleted-files-go.html" target="_blank" class="theme-card rounded-2xl p-6 flex flex-col items-center text-center group hover:border-indigo-500 transition-all stagger-item">
             <div class="h-12 w-12 rounded-xl bg-indigo-500/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-trash-can text-indigo-500 text-lg"></i>
             </div>
             <h5 class="text-[9px] font-black uppercase tracking-widest theme-text-main">Deleted Files</h5>
           </a>
-          <a href="https://www.youtube.com/playlist?list=PLYc3s0QbCO6-oqLP_lB9sKAlDxz3e2Muo" target="_blank" class="theme-card rounded-2xl p-6 flex flex-col items-center text-center group hover:border-pink-500 transition-all">
+          <a href="https://www.youtube.com/playlist?list=PLYc3s0QbCO6-oqLP_lB9sKAlDxz3e2Muo" target="_blank" class="theme-card rounded-2xl p-6 flex flex-col items-center text-center group hover:border-pink-500 transition-all stagger-item">
             <div class="h-12 w-12 rounded-xl bg-pink-500/5 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
               <i class="fa-solid fa-video text-pink-500 text-lg"></i>
             </div>
@@ -510,26 +594,26 @@
 
     <!-- 4. IDENTITY SECTION -->
     <section id="about" class="mb-52 scroll-mt-32">
-      <div class="section-title"><i class="fa-solid fa-fingerprint"></i><span>Identity</span></div>
-      <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-24">About Jothibasu</h2>
+      <div class="section-title reveal-slide-left"><i class="fa-solid fa-fingerprint"></i><span>Identity</span></div>
+      <h2 class="text-4xl md:text-6xl font-black tracking-tighter mb-24 reveal-slide-up">About Jothibasu</h2>
       
       <div class="reveal-content mb-32">
         <div class="max-w-4xl text-left">
-          <h3 class="text-4xl font-black mb-12 leading-tight theme-text-main">Detailed-oriented, responsible and committed engineer with a high-quality product spirit.</h3>
-          <p class="text-xl theme-text-muted font-medium leading-relaxed mb-10 text-pretty text-justify">
+          <h3 class="text-4xl font-black mb-12 leading-tight theme-text-main reveal-slide-up">Detailed-oriented, responsible and committed engineer with a high-quality product spirit.</h3>
+          <p class="text-xl theme-text-muted font-medium leading-relaxed mb-10 text-pretty text-justify reveal-slide-up">
             With over a decade of multi-disciplinary experience, I bridge the gap between complex architectural requirements and high-performance execution. I specialize in designing scalable back-end infrastructures and intuitive front-end ecosystems that drive business value and technical excellence.
           </p>
-          <p class="text-lg theme-text-muted font-medium leading-relaxed text-pretty text-justify">
+          <p class="text-lg theme-text-muted font-medium leading-relaxed text-pretty text-justify reveal-slide-up">
             My engineering philosophy centers on technical rigor, rapid problem-solving, and a "get-it-done" spirit that ensures products are not only technically sound but also strategically aligned for growth.
           </p>
         </div>
       </div>
 
       <!-- Endorsements Grid (Uniform) -->
-      <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-16 text-center">Global Endorsements</h4>
+      <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-400 mb-16 text-center reveal-slide-up">Global Endorsements</h4>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Card 1 -->
-        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left">
+        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left stagger-item">
           <p class="text-sm font-medium theme-text-muted leading-relaxed italic mb-10 text-pretty">"One of the most interesting personality to work with, His energy and dedication is very high. He never hesitate to take any challenging work, and completes with high quality. He is the go to person if you want to get something done very quickly with high quality. He is a good team player, He make sure his team learns along with him. His dedication and composed attitude will take him to new heights."</p>
           <div class="flex items-center gap-4">
             <img src="2019/img/testimonials/strakin.png" class="h-12 w-12 rounded-xl border border-slate-100 dark:border-slate-800 object-cover">
@@ -540,7 +624,7 @@
           </div>
         </div>
         <!-- Card 2 -->
-        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left">
+        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left stagger-item">
           <p class="text-sm font-medium theme-text-muted leading-relaxed italic mb-10 text-pretty">"I have worked with Jothi for quite few months now, he has been excellent with his design inputs for the project. Jothi is excellent with his technical skills on React native, thorough professional and a great human being. I loved working with you Jothi on 121Event app and would love to work with you in future."</p>
           <div class="flex items-center gap-4">
             <img src="2019/img/testimonials/121Event.jpg" class="h-12 w-12 rounded-xl border border-slate-100 dark:border-slate-800 object-cover">
@@ -551,7 +635,7 @@
           </div>
         </div>
         <!-- Card 3 -->
-        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left">
+        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left stagger-item">
           <p class="text-sm font-medium theme-text-muted leading-relaxed italic mb-10 text-pretty">"Jothibasu is one of the best among all people I have ever met and is a loyal student, understands complex matters. As I remember, Jothibasu was a very productive person and is a multi-skilled person with vast knowledge. He is careful, proactive, self motivated and intelligent team player. Both smart and professional. Highly recommended."</p>
           <div class="flex items-center gap-4">
             <img src="2019/img/testimonials/search_anything.png" class="h-12 w-12 rounded-xl border border-slate-100 dark:border-slate-800 object-cover">
@@ -562,7 +646,7 @@
           </div>
         </div>
         <!-- Card 4 -->
-        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left">
+        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left stagger-item">
           <p class="text-sm font-medium theme-text-muted leading-relaxed italic mb-10 text-pretty">"Jothi Basu was a vivid learner that I came across during the Tech Course I we deliver at his college under University Academic program. All the best to you in your upcoming career."</p>
           <div class="flex items-center gap-4">
             <img src="2019/img/testimonials/pega.png" class="h-12 w-12 rounded-xl border border-slate-100 dark:border-slate-800 object-cover">
@@ -573,7 +657,7 @@
           </div>
         </div>
         <!-- Card 5 -->
-        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left">
+        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left stagger-item">
           <p class="text-sm font-medium theme-text-muted leading-relaxed italic mb-10 text-pretty">"Jothi Basu is talented and hard working professional, He has strong technical skills and he is also a continuous learner. He can be trusted with any project and he will figure out the way to complete the project."</p>
           <div class="flex items-center gap-4">
             <img src="2019/img/testimonials/acceletrade.png" class="h-12 w-12 rounded-xl border border-slate-100 dark:border-slate-800 object-cover">
@@ -584,7 +668,7 @@
           </div>
         </div>
         <!-- Card 6 -->
-        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left">
+        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left stagger-item">
           <p class="text-sm font-medium theme-text-muted leading-relaxed italic mb-10 text-pretty">"Jothibasu is such a technically skilled person and continuous learner ,self disciplined and self learner,well planned person to do the task. sometime , I surprised his dedication to his work."</p>
           <div class="flex items-center gap-4">
             <img src="2019/img/testimonials/hcl.png" class="h-12 w-12 rounded-xl border border-slate-100 dark:border-slate-800 object-cover">
@@ -595,7 +679,7 @@
           </div>
         </div>
         <!-- Card 7 -->
-        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left">
+        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left stagger-item">
           <p class="text-sm font-medium theme-text-muted leading-relaxed italic mb-10 text-pretty">"He's such a nice guy with lots of skills. Great skills in coding and such a humble, kind-earthed person."</p>
           <div class="flex items-center gap-4">
             <img src="2019/img/testimonials/accenture.png" class="h-12 w-12 rounded-xl border border-slate-100 dark:border-slate-800 object-cover">
@@ -606,7 +690,7 @@
           </div>
         </div>
         <!-- Card 8 -->
-        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left">
+        <div class="theme-card testimonial-card rounded-[32px] p-8 brand-glow text-left stagger-item">
           <p class="text-sm font-medium theme-text-muted leading-relaxed italic mb-10 text-pretty">"He is Brilliant, Intelligence, smart and hardworking IT professional. A man with a B-Quadrant mindset. He is my mentor and advisor. He is well matured in every aspect of his life. He maintains a good network. He takes 100% responsibility for his work. He always has a different perspective in all matters."</p>
           <div class="flex items-center gap-4">
             <img src="2019/img/testimonials/mphasis.png" class="h-12 w-12 rounded-xl border border-slate-100 dark:border-slate-800 object-cover">
@@ -790,10 +874,15 @@
       document.body.style.overflow = '';
     }
 
-    // BRAND INTERACTION
+    const cards = document.querySelectorAll('.theme-card');
+    const magneticElements = document.querySelectorAll('.magnetic-wrap');
+    const backgroundOrbs = document.querySelectorAll('.animate-orb, .animate-orb-delayed');
     const brandChars = document.querySelectorAll('.brand-char');
+
     window.addEventListener('mousemove', (e) => {
       const { clientX: mx, clientY: my } = e;
+      const { innerWidth: width, innerHeight: height } = window;
+
       brandChars.forEach(char => {
         const rect = char.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
@@ -807,6 +896,38 @@
           char.style.color = '';
           char.style.transform = '';
         }
+      });
+
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const x = mx - rect.left;
+        const y = my - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+
+      magneticElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const distanceX = mx - centerX;
+        const distanceY = my - centerY;
+        const distance = Math.sqrt(distanceX**2 + distanceY**2);
+
+        if (distance < 100) {
+          const pullX = distanceX * 0.3;
+          const pullY = distanceY * 0.3;
+          el.style.transform = `translate(${pullX}px, ${pullY}px)`;
+        } else {
+          el.style.transform = '';
+        }
+      });
+
+      const moveX = (mx - width / 2) / width * 30; // Max 30px move
+      const moveY = (my - height / 2) / height * 30;
+      backgroundOrbs.forEach((orb, index) => {
+        const multiplier = index === 0 ? 1 : -1; // Move orbs in opposite directions
+        orb.style.transform = `translate(${moveX * multiplier}px, ${moveY * multiplier}px)`;
       });
     });
 
@@ -829,14 +950,39 @@
     syncTheme(localStorage.getItem('jb-theme-v2') || 'light');
 
     // SCROLL REVEAL ANIMATIONS
-    document.querySelectorAll('.testimonial-card, .reveal-content').forEach(el => {
-      new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('reveal');
+    const revealCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal');
+          // If it's a stagger container or has stagger items, handle children
+          if (entry.target.classList.contains('stagger-container')) {
+            const items = entry.target.querySelectorAll('.stagger-item');
+            items.forEach((item, index) => {
+              setTimeout(() => {
+                item.classList.add('reveal');
+              }, index * 100);
+            });
           }
-        });
-      }, {threshold: 0.1}).observe(el);
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    const revealObserver = new IntersectionObserver(revealCallback, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal-content, .reveal-slide-up, .reveal-slide-left, .reveal-slide-right, .reveal-zoom-in, .testimonial-card').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // Stagger items that are not in a container will be handled by their own observer or a parent
+    document.querySelectorAll('.stagger-item').forEach((el, index) => {
+      // Find the closest grid or flex container to use as a stagger group
+      const container = el.parentElement;
+      if (container && !container.dataset.observed) {
+        container.classList.add('stagger-container');
+        container.dataset.observed = "true";
+        revealObserver.observe(container);
+      }
     });
   </script>
 </body>
