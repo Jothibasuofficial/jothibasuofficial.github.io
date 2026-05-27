@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../2019/img/favicon.png" type="image/png">
   <title>MongoQuery Architect — Explain Plan Visualizer</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,6 +137,14 @@
     .light .node-text-desc {
       fill: #475569 !important;
     }
+    .nav-logo {
+      height: 2rem;
+      transition: transform 0.3s ease;
+    }
+    .magnetic-wrap {
+      display: inline-block;
+      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
   </style>
 </head>
 
@@ -145,18 +154,9 @@
 
   <header class="h-16 border-b flex items-center justify-between px-6 shrink-0 z-20 shadow-md"
     style="background:var(--bg-alt); border-color:var(--border);">
-    <div class="flex items-center gap-3">
-      <div class="h-9 w-9 rounded-xl brand-grad flex items-center justify-center shadow-lg">
-        <i class="fa-solid fa-graduation-cap text-white text-sm"></i>
-      </div>
-      <div class="flex flex-col">
-        <span class="font-extrabold tracking-tight text-sm sm:text-base flex items-center gap-1.5 leading-none mb-0.5">
-          <span class="brand-grad-text">MongoQuery</span>
-          <span style="color:var(--text);">Architect</span>
-        </span>
-        <span class="text-[9px] text-zinc-500 font-bold tracking-widest uppercase mono">Friendly Explanation
-          Engine</span>
-      </div>
+    <div class="flex items-center cursor-pointer magnetic-wrap" onclick="location.href='../../index.html'">
+      <img src="../../2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo dark:hidden">
+      <img src="../../2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo hidden dark:block">
     </div>
 
     <div class="flex items-center gap-3">

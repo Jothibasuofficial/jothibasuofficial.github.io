@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../2019/img/favicon.png" type="image/png">
   <title>JB experiments</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,6 +75,16 @@
 
     .font-mono {
       font-family: 'JetBrains Mono', monospace;
+    }
+
+    .nav-logo {
+      height: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .magnetic-wrap {
+      display: inline-block;
+      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .theme-card {
@@ -240,15 +251,9 @@
 
   <header
     class="h-16 w-full border-b theme-header flex items-center justify-between px-6 md:px-12 z-50 shrink-0 backdrop-blur-md sticky top-0 transition-colors duration-300">
-    <div class="flex items-center space-x-3 group cursor-pointer">
-      <div
-        class="h-9 w-9 rounded-xl bg-gradient-to-tr from-pink-600 to-indigo-600 flex items-center justify-center font-black text-white text-base shadow-md transition-transform duration-500 group-hover:rotate-12 group-hover:scale-105">
-        JB
-      </div>
-      <div class="text-sm font-extrabold tracking-tight font-mono uppercase transition-all theme-text-main">
-        <span class="text-pink-500 text-base">J</span><span
-          class="text-indigo-600 dark:text-indigo-400 text-base">B</span> experiments
-      </div>
+    <div class="flex items-center cursor-pointer magnetic-wrap" onclick="location.href='../index.html'">
+      <img src="../2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo dark:hidden">
+      <img src="../2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo hidden dark:block">
     </div>
 
     <div class="flex items-center space-x-6">

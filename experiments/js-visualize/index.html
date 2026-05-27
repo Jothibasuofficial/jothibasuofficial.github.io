@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../2019/img/favicon.png" type="image/png">
   <title>Enterprise JS Engine Visualizer Pro</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,15 +87,22 @@
     .animate-frame { 
       animation: frameArrival 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
     }
+    .nav-logo {
+      height: 2rem;
+      transition: transform 0.3s ease;
+    }
+    .magnetic-wrap {
+      display: inline-block;
+      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    }
   </style>
 </head>
 <body class="h-screen flex flex-col overflow-hidden select-none font-sans antialiased">
 
   <header class="h-14 border-b-2 border-vpBorder flex items-center justify-between px-4 bg-vpBgAlt z-10 shrink-0 shadow-sm">
-    <div class="flex items-center gap-2">
-      <span class="text-base font-black tracking-tight flex items-center gap-1.5 text-slate-900 dark:text-white">
-        ⚡ JS <span class="brand-gradient-text font-black">Visualizer Pro</span>
-      </span>
+    <div class="flex items-center cursor-pointer magnetic-wrap" onclick="location.href='../../index.html'">
+      <img src="../../2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo dark:hidden">
+      <img src="../../2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo hidden dark:block">
     </div>
     
     <div class="flex items-center gap-2 flex-wrap">
