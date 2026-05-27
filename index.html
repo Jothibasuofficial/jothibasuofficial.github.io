@@ -122,11 +122,43 @@
       border-radius: 16px;
       font-weight: 800;
       box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.3);
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-main::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: rotate(45deg);
+      transition: 0.6s;
+      left: -150%;
+    }
+    .btn-main:hover::after {
+      left: 150%;
     }
     .btn-main:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 15px 30px -5px rgba(236, 72, 153, 0.4);
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 15px 30px -5px rgba(236, 72, 153, 0.5);
+    }
+
+    .btn-cv {
+      border: 2px solid var(--border-color);
+      padding: 0.9rem 1.8rem;
+      border-radius: 16px;
+      font-weight: 800;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-cv:hover {
+      border-color: var(--accent-blue);
+      background-color: var(--accent-blue);
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.3);
     }
 
     .nav-logo {
@@ -369,7 +401,7 @@
       
       <div class="flex flex-wrap justify-center gap-6 reveal-slide-up">
         <a href="#projects" class="btn-main magnetic-wrap">Selected Ecosystems</a>
-        <a href="2019/docs/Jothibasu_New.pdf" download class="btn-outline flex items-center gap-3 magnetic-wrap">
+        <a href="2019/docs/Jothibasu_New.pdf" download="Jothibasu_CV.pdf" class="btn-cv magnetic-wrap">
           Download CV <i class="fa-solid fa-file-pdf opacity-50"></i>
         </a>
       </div>

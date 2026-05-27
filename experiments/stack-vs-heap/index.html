@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../2019/img/favicon.png" type="image/png">
+  <title>Stack vs Heap Arena Pro — Memory Lifecycle Visualizer</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs/loader.min.js"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            vpBg: 'var(--vp-bg)',
+            vpBgAlt: 'var(--vp-bg-alt)',
+            vpBorder: 'var(--vp-border)',
+            vpText: 'var(--vp-text)',
+            vpTextMuted: 'var(--vp-text-muted)',
+            brandIndigo: '#6366f1',
+            brandPink: '#ec4899',
+            brandEmerald: '#10b981'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root.dark {
+      --vp-bg: #0b0f19;
+      --vp-bg-alt: #121826;
+      --vp-border: #2d3748;
+      --vp-text: #f8fafc;
+      --vp-text-muted: #94a3b8;
+      --arena-grid: rgba(255,255,255,0.03);
+      --arena-segment: rgba(255,255,255,0.1);
+    }
+    :root.light {
+      --vp-bg: #ffffff;
+      --vp-bg-alt: #f1f5f9;
+      --vp-border: #cbd5e1;
+      --vp-text: #0f172a;
+      --vp-text-muted: #475569;
+      --arena-grid: rgba(0,0,0,0.05);
+      --arena-segment: rgba(0,0,0,0.1);
+    }
+    body { background-color: var(--vp-bg); color: var(--vp-text); transition: background-color 0.15s ease, color 0.15s ease; }
+    
+    .brand-gradient-bg {
+      background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+    }
+    .brand-gradient-text {
+      background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-logo { height: 2rem; transition: transform 0.3s ease; }
+    .magnetic-wrap { display: inline-block; transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
+
+    .stack-frame { transition: all 0.3s ease; }
+    .heap-node { transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reference-line { transition: stroke-dashoffset 0.5s ease-in-out; }
+    
+    @keyframes pulse-active {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+    .active-memory { animation: pulse-active 2s infinite; }
+  </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden select-none font-sans antialiased">
+
+  <header class="h-14 border-b-2 border-vpBorder flex items-center justify-between px-4 bg-vpBgAlt z-10 shrink-0 shadow-sm">
+    <div class="flex items-center cursor-pointer magnetic-wrap" onclick="location.href='../index.html'">
+      <img src="../../2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo dark:hidden">
+      <img src="../../2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo hidden dark:block">
+    </div>
+    
+    <div class="flex items-center gap-3 flex-wrap">
+      <select id="preset-select" class="bg-vpBg border-2 border-vpBorder text-vpText rounded-lg font-bold px-3 py-1.5 text-xs focus:outline-none focus:border-brandIndigo max-w-[200px] shadow-sm cursor-pointer"></select>
+      
+      <select id="theme-select" class="bg-vpBg border-2 border-vpBorder text-vpText rounded-lg font-bold px-2 py-1.5 text-xs focus:outline-none shadow-sm cursor-pointer">
+        <option value="light">☀️ Light Mode</option>
+        <option value="dark">🌙 Dark Mode</option>
+      </select>
+      
+      <button id="visualize-trigger-btn" class="brand-gradient-bg text-white text-xs font-black px-6 py-2 rounded-lg transition-all shadow-md hover:opacity-90 active:scale-95 tracking-wide uppercase">
+        Visualize Memory
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+    
+    <!-- Code input section -->
+    <div class="h-2/5 lg:h-full lg:w-4/12 flex flex-col border-b-2 lg:border-b-0 lg:border-r-2 border-vpBorder bg-vpBgAlt">
+      <div class="h-9 bg-vpBg border-b-2 border-vpBorder flex items-center px-4 text-[10px] uppercase tracking-widest text-vpTextMuted font-black justify-between shrink-0">
+        <span>Source Sandbox</span>
+        <span id="step-counter" class="text-brandIndigo font-mono">Step: 0 / 0</span>
+      </div>
+      <div id="editor-container" class="flex-1 overflow-hidden"></div>
+      
+      <div class="h-12 border-t-2 border-vpBorder flex items-center px-4 gap-2 bg-vpBg shrink-0">
+        <button id="prev-btn" class="flex-1 bg-vpBgAlt border border-vpBorder hover:border-brandIndigo text-vpText text-[10px] font-black py-1.5 rounded transition-all disabled:opacity-30">◀ PREV</button>
+        <button id="next-btn" class="flex-1 bg-vpBgAlt border border-vpBorder hover:border-brandIndigo text-vpText text-[10px] font-black py-1.5 rounded transition-all disabled:opacity-30">NEXT ▶</button>
+      </div>
+    </div>
+
+    <!-- Visualization section -->
+    <div class="h-3/5 lg:h-full lg:w-8/12 flex flex-col overflow-hidden bg-vpBg">
+      <div class="flex-1 p-4 overflow-hidden relative">
+        <div class="absolute inset-0 flex flex-col p-4">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-[10px] font-black uppercase tracking-widest text-brandIndigo flex items-center gap-2">
+              <i class="fa-solid fa-memory"></i> 64-Bit Physical RAM Architecture Simulation
+            </h3>
+            <div class="flex items-center gap-3">
+              <span id="ram-usage" class="text-[9px] font-mono text-vpTextMuted uppercase">Heap Usage: 0KB</span>
+              <span id="gc-status" class="text-[9px] px-2 py-0.5 rounded-full border border-vpBorder text-vpTextMuted">GC: Active</span>
+            </div>
+          </div>
+          <div id="arena-container" class="flex-1 relative border-2 border-vpBorder rounded-2xl bg-vpBgAlt shadow-2xl overflow-hidden">
+            <!-- Segment Labels -->
+            <div class="absolute top-4 left-4 z-20 text-[8px] font-black uppercase tracking-[0.2em] text-indigo-500/50 flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-indigo-500/20 border border-indigo-500/40"></span> Stack Segment [0x7FFF...]
+            </div>
+            <div class="absolute top-4 right-4 z-20 text-[8px] font-black uppercase tracking-[0.2em] text-pink-500/50 flex items-center gap-1">
+              Heap Segment [0x6000...] <span class="w-2 h-2 rounded-full bg-pink-500/20 border border-pink-500/40"></span>
+            </div>
+            <svg id="arena-svg" class="w-full h-full"></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Explanation panel -->
+      <div class="h-32 bg-vpBgAlt border-t-2 border-vpBorder p-4 shrink-0 overflow-y-auto">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-[9px] font-black text-brandIndigo uppercase tracking-widest mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-comment-dots"></i> Pro Memory Analysis
+          </div>
+          <div id="explanation-text" class="text-xs font-semibold leading-relaxed text-vpText">
+            Welcome to Stack vs Heap Arena Pro. Enter your JavaScript code or choose a preset to visualize memory allocation and garbage collection lifecycle in real-time.
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Global Tooltip Component -->
+  <div id="tooltip" class="fixed pointer-events-none z-[100] opacity-0 transition-opacity duration-200 bg-vpBg border border-brandIndigo p-2 rounded shadow-xl text-[10px] font-mono text-vpText"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
