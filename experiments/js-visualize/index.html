@@ -6,6 +6,14 @@
   <link rel="icon" href="../../2019/img/favicon.png" type="image/png">
   <title>Enterprise JS Engine Visualizer Pro</title>
   
+  <script>
+    // Immediate Theme Application to prevent FOUC
+    (function() {
+      const theme = localStorage.getItem('jb-portfolio-theme') || 'light';
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -114,10 +122,9 @@
         <option value="ta">🇮🇳 தமிழ்</option>
       </select>
       
-      <select id="theme-select" class="bg-vpBg border-2 border-vpBorder text-vpText rounded-lg font-bold px-2 py-1.5 text-xs focus:outline-none shadow-sm cursor-pointer">
-        <option value="dark">🌙 Dark Mode</option>
-        <option value="light">☀️ Light Mode</option>
-      </select>
+      <button id="theme-toggle" class="p-2 rounded-lg bg-vpBg border-2 border-vpBorder text-vpText hover:border-brandPrimary transition-all shadow-sm">
+        <i id="theme-toggle-icon" class="fa-solid fa-sun text-amber-500"></i>
+      </button>
       
       <button id="visualize-trigger-btn" class="brand-gradient-bg text-white text-xs font-black px-5 py-2 rounded-lg transition-all shadow-md hover:opacity-95 active:scale-95 tracking-wide uppercase">
         Visualize Execution

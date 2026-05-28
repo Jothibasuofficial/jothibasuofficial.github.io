@@ -27,6 +27,14 @@
 
   <title>Jothibasu | Full Stack Engineer & CTO</title>
 
+  <script>
+    // Immediate Theme Application to prevent FOUC
+    (function() {
+      const theme = localStorage.getItem('jb-portfolio-theme') || 'light';
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    })();
+  </script>
+
   <!-- UI Frameworks & Fonts -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -974,14 +982,14 @@
         htmlEl.classList.remove('dark');
         themeIcon.className = 'fa-solid fa-sun text-amber-500';
       }
-      localStorage.setItem('jb-theme-v2', mode);
+      localStorage.setItem('jb-portfolio-theme', mode);
     };
 
     themeToggleBtn.addEventListener('click', () => {
       syncTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
     });
 
-    syncTheme(localStorage.getItem('jb-theme-v2') || 'light');
+    syncTheme(localStorage.getItem('jb-portfolio-theme') || 'light');
 
     // SCROLL REVEAL ANIMATIONS
     const revealCallback = (entries, observer) => {

@@ -7,6 +7,14 @@
   <link rel="icon" href="../../2019/img/favicon.png" type="image/png">
   <title>MongoQuery Architect — Explain Plan Visualizer</title>
 
+  <script>
+    // Immediate Theme Application to prevent FOUC
+    (function() {
+      const theme = localStorage.getItem('jb-portfolio-theme') || 'light';
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -170,12 +178,9 @@
         <option value="compound_index">🔵 Compound Index (Advanced Multi-Field Strategy)</option>
       </select>
 
-      <select id="theme-select"
-        class="mono font-bold text-xs px-2.5 py-2 rounded-lg border focus:outline-none cursor-pointer"
-        style="background:var(--bg);color:var(--text);border-color:var(--border);">
-        <option value="light">☀️ Light Mode</option>
-        <option value="dark">🌙 Dark Mode</option>
-      </select>
+      <button id="theme-toggle" class="p-2 rounded-lg bg-vpBg border-2 border-vpBorder text-vpText hover:border-brandPrimary transition-all shadow-sm">
+        <i id="theme-toggle-icon" class="fa-solid fa-sun text-amber-500"></i>
+      </button>
 
       <button id="run-btn"
         class="brand-grad text-white text-xs font-extrabold px-5 py-2 rounded-lg shadow-md hover:brightness-110 active:scale-[0.98] transition-all tracking-wide uppercase mono">

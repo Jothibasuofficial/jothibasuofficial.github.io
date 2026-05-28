@@ -6,6 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../2019/img/favicon.png" type="image/png">
   <title>JB experiments</title>
+  
+  <script>
+    // Immediate Theme Application to prevent FOUC
+    (function() {
+      const theme = localStorage.getItem('jb-portfolio-theme') || 'light';
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    })();
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -406,6 +415,38 @@
         </a>
       </div>
 
+      <!-- ACTIVE: Earth Axis Explorer -->
+      <div
+        class="brand-glow theme-card opacity-0 transform translate-y-8 transition-all duration-700 group relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs hover:shadow-xl"
+        style="transition-delay: 280ms;">
+        <div
+          class="absolute top-0 right-0 h-24 w-24 bg-gradient-to-bl from-blue-500/10 to-transparent rounded-tr-2xl rounded-bl-full pointer-events-none">
+        </div>
+        <div>
+          <div
+            class="h-12 w-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500 text-xl mb-6 shadow-xs transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
+            <i class="fa-solid fa-earth-americas"></i>
+          </div>
+          <div class="flex items-center justify-between mb-2">
+            <h2
+              class="text-lg font-bold transition-colors theme-text-main group-hover:text-blue-600 dark:group-hover:text-blue-400">
+              Earth Axis Explorer</h2>
+            <span
+              class="text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md border border-emerald-500/20 badge-live-engine animate-pulse">Live
+              Now</span>
+          </div>
+          <p class="theme-text-muted text-xs leading-relaxed mb-8">
+            A high-fidelity 3D planetary simulation mapping Geographic vs. Magnetic poles. Deconstructs axial tilt, magnetic drift, and polar phenomena based on systemic geographic data.
+          </p>
+        </div>
+        <a href="earth-axis/index.html"
+          class="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs py-3 px-4 rounded-xl shadow-md transition-all transform active:scale-[0.98] group/btn">
+          <span>Launch Planet Orbit</span>
+          <i
+            class="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-1.5"></i>
+        </a>
+      </div>
+
       <!-- INACTIVE: MERN Data-Flow Lifecycle (In Incubation) -->
       <div
         class="opacity-0 transform translate-y-8 transition-all duration-700 relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs select-none nonlive-wrapper"
@@ -567,12 +608,8 @@
     themeToggleBtn.addEventListener('click', () => {
       const currentTheme = htmlEl.classList.contains('dark') ? 'dark' : 'light';
       if (currentTheme === 'dark') {
-        htmlEl.classList.remove('dark');
-        localStorage.setItem('jb-theme-preference', 'light');
         syncThemeToggleUI('light');
       } else {
-        htmlEl.classList.add('dark');
-        localStorage.setItem('jb-theme-preference', 'dark');
         syncThemeToggleUI('dark');
       }
     });
@@ -587,6 +624,7 @@
         themeIcon.className = 'fa-solid fa-sun text-amber-500 scale-100';
         htmlEl.classList.remove('dark');
       }
+      localStorage.setItem('jb-portfolio-theme', mode);
 
       // Clear dynamic color runtime overrides on theme flip to make sure correct text baseline values apply instantly
       if (typeof brandChars !== 'undefined') {
@@ -594,7 +632,7 @@
       }
     }
 
-    const savedPreference = localStorage.getItem('jb-theme-preference') || 'light';
+    const savedPreference = localStorage.getItem('jb-portfolio-theme') || 'light';
     syncThemeToggleUI(savedPreference);
   </script>
 

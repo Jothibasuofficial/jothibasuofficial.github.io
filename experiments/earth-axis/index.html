@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../2019/img/favicon.png" type="image/png">
+  <title>Earth Axis Explorer — Planetary Architecture Simulation</title>
+  
+  <script>
+    // Immediate Theme Application to prevent FOUC
+    (function() {
+      const theme = localStorage.getItem('jb-portfolio-theme') || 'light';
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/globe.gl"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            vpBg: 'var(--vp-bg)',
+            vpBgAlt: 'var(--vp-bg-alt)',
+            vpBorder: 'var(--vp-border)',
+            vpText: 'var(--vp-text)',
+            vpTextMuted: 'var(--vp-text-muted)',
+            brandPrimary: '#2563eb',
+            brandSecondary: '#ec4899',
+            brandEarth: '#10b981'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root.dark {
+      --vp-bg: #0b0f19;
+      --vp-bg-alt: #121826;
+      --vp-border: #2d3748;
+      --vp-text: #f8fafc;
+      --vp-text-muted: #94a3b8;
+    }
+    :root.light {
+      --vp-bg: #ffffff;
+      --vp-bg-alt: #f1f5f9;
+      --vp-border: #cbd5e1;
+      --vp-text: #0f172a;
+      --vp-text-muted: #475569;
+    }
+    body { background-color: var(--vp-bg); color: var(--vp-text); transition: background-color 0.15s ease, color 0.15s ease; }
+    
+    .brand-gradient-bg {
+      background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    }
+
+    .nav-logo { height: 2rem; transition: transform 0.3s ease; }
+    .magnetic-wrap { display: inline-block; transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
+
+    #globe-viz { width: 100%; height: 100%; position: relative; }
+    .info-overlay { pointer-events: none; }
+  </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden select-none font-sans antialiased">
+
+  <header class="h-14 border-b-2 border-vpBorder flex items-center justify-between px-4 bg-vpBgAlt z-10 shrink-0 shadow-sm">
+    <div class="flex items-center cursor-pointer magnetic-wrap" onclick="location.href='../index.html'">
+      <img src="../../2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo dark:hidden">
+      <img src="../../2019/img/logo.png" alt="Jothibasu Logo" class="nav-logo hidden dark:block">
+    </div>
+    
+    <div class="flex items-center gap-3">
+      <div class="relative group hidden md:block">
+        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-[10px] text-vpTextMuted group-focus-within:text-brandPrimary transition-colors"></i>
+        <input type="text" id="country-search" placeholder="Search Territory..." class="bg-vpBg border-2 border-vpBorder text-vpText text-[10px] font-bold pl-8 pr-4 py-1.5 rounded-lg focus:outline-none focus:border-brandPrimary transition-all w-48 shadow-sm">
+        <div id="search-results" class="absolute top-full left-0 w-full bg-vpBgAlt border-2 border-vpBorder rounded-lg mt-1 hidden max-h-48 overflow-y-auto z-[100] shadow-xl"></div>
+      </div>
+      <button id="rotation-toggle" class="bg-vpBg border-2 border-vpBorder text-vpText text-[10px] font-black px-4 py-1.5 rounded-lg hover:border-brandPrimary transition-all uppercase tracking-widest shadow-sm">
+        <i class="fa-solid fa-rotate mr-2"></i> Auto-Rotate: ON
+      </button>
+      <button id="atmosphere-toggle" class="bg-vpBg border-2 border-vpBorder text-vpText text-[10px] font-black px-4 py-1.5 rounded-lg hover:border-brandPrimary transition-all uppercase tracking-widest shadow-sm">
+        <i class="fa-solid fa-cloud mr-2"></i> Atmosphere
+      </button>
+      <button id="theme-toggle" class="p-2 rounded-lg bg-vpBg border-2 border-vpBorder text-vpText hover:border-brandPrimary transition-all shadow-sm">
+        <i id="theme-toggle-icon" class="fa-solid fa-sun text-amber-500"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+    
+    <!-- Analysis Panel -->
+    <div class="h-2/5 lg:h-full lg:w-4/12 flex flex-col border-b-2 lg:border-b-0 lg:border-r-2 border-vpBorder bg-vpBgAlt">
+      <div class="h-9 bg-vpBg border-b-2 border-vpBorder flex items-center px-4 text-[10px] uppercase tracking-widest text-vpTextMuted font-black justify-between shrink-0">
+        <span>Planetary Diagnostics</span>
+        <span id="coord-indicator" class="text-brandPrimary font-mono">LAT: -- LNG: -- ALT: --</span>
+      </div>
+      
+      <div class="flex-1 overflow-y-auto p-6 space-y-8">
+        <section>
+          <h3 class="text-xs font-black uppercase tracking-widest text-brandPrimary mb-4 flex items-center gap-2">
+            <i class="fa-solid fa-gauge-high"></i> Core Planetary Metrics
+          </h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-vpBg border border-vpBorder p-3 rounded-xl text-center">
+              <div class="text-[8px] text-vpTextMuted uppercase font-bold mb-1">
+                <i class="fa-solid fa-location-arrow mr-1 opacity-50"></i> Dist. to North
+              </div>
+              <div id="metric-dist-n" class="text-sm font-black font-mono">-- km</div>
+            </div>
+            <div class="bg-vpBg border border-vpBorder p-3 rounded-xl text-center">
+              <div class="text-[8px] text-vpTextMuted uppercase font-bold mb-1">
+                <i class="fa-solid fa-wind mr-1 opacity-50"></i> Surface Speed
+              </div>
+              <div id="metric-speed" class="text-sm font-black font-mono">-- km/h</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="analysis-content">
+          <div class="section-title text-[9px] font-black uppercase tracking-[0.2em] text-pink-500 mb-4 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-pink-500/20 border border-pink-500/40"></span> Geographic Extremes
+          </div>
+          <div class="space-y-4 text-xs font-medium leading-relaxed text-vpText">
+             <p id="fact-box">Select a feature or pole on the globe to analyze its physical properties.</p>
+          </div>
+        </section>
+
+        <section id="country-intel" class="hidden border-t-2 border-vpBorder pt-8">
+          <div class="section-title text-[9px] font-black uppercase tracking-[0.2em] text-brandPrimary mb-4 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brandPrimary/20 border border-brandPrimary/40"></span> Territory Insight
+          </div>
+          <div id="country-data" class="space-y-3">
+             <!-- Dynamically populated -->
+          </div>
+        </section>
+
+        <section class="border-t-2 border-vpBorder pt-8">
+           <div class="bg-brandPrimary/5 border border-brandPrimary/20 p-4 rounded-2xl">
+             <h4 class="text-[10px] font-black uppercase tracking-widest text-brandPrimary mb-2">Magnetic Drift Update</h4>
+             <p class="text-[11px] font-semibold text-vpTextMuted leading-relaxed">
+               Current drift speed: 41km/year towards Siberia. Historically, this was only 9km/year before 1970.
+             </p>
+           </div>
+           <div class="mt-4 bg-pink-500/5 border border-pink-500/20 p-4 rounded-2xl">
+             <h4 class="text-[10px] font-black uppercase tracking-widest text-pink-500 mb-2">The Geodynamo Effect</h4>
+             <p class="text-[11px] font-semibold text-vpTextMuted leading-relaxed">
+               The field is generated by swirling molten iron in the outer core, not a solid magnet.
+             </p>
+           </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Visualization Arena -->
+    <div class="h-3/5 lg:h-full lg:w-8/12 flex flex-col overflow-hidden bg-slate-950 relative">
+      <div id="globe-viz"></div>
+      
+      <!-- Legends -->
+      <div class="absolute bottom-6 left-6 z-20 flex flex-col gap-2">
+        <div class="flex items-center gap-3 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full text-[9px] font-bold text-white uppercase tracking-widest">
+           <span class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span> Geographic Pole
+        </div>
+        <div class="flex items-center gap-3 bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full text-[9px] font-bold text-white uppercase tracking-widest">
+           <span class="w-2 h-2 rounded-full bg-pink-500 shadow-[0_0_8px_rgba(236,72,153,0.8)]"></span> Magnetic Pole
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

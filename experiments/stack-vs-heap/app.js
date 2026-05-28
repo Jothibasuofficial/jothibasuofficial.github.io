@@ -72,13 +72,30 @@ require(['vs/editor/editor.main', 'd3'], function (_, d3Instance) {
   resetVisualizer();
 });
 
-document.getElementById('theme-select').addEventListener('change', (e) => {
-  const isDark = e.target.value === 'dark';
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  const current = localStorage.getItem('jb-portfolio-theme') || 'light';
+  const mode = current === 'dark' ? 'light' : 'dark';
+  syncThemeUI(mode);
+});
+
+function syncThemeUI(mode) {
+  const isDark = mode === 'dark';
   document.documentElement.classList.toggle('dark', isDark);
   document.documentElement.classList.toggle('light', !isDark);
-  monaco.editor.setTheme(isDark ? 'vs-dark' : 'vs');
+  if (window.monaco) monaco.editor.setTheme(isDark ? 'vs-dark' : 'vs');
+  const icon = document.getElementById('theme-toggle-icon');
+  if (icon) {
+    icon.className = isDark ? 'fa-solid fa-moon text-indigo-400' : 'fa-solid fa-sun text-amber-500';
+  }
+  localStorage.setItem('jb-portfolio-theme', mode);
   if (timeline.length > 0) renderStep(currentStep);
-});
+}
+
+// Initial theme application
+(function initTheme() {
+  const theme = localStorage.getItem('jb-portfolio-theme') || 'light';
+  syncThemeUI(theme);
+})();
 
 document.getElementById('visualize-trigger-btn').addEventListener('click', runSimulation);
 

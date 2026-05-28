@@ -118,16 +118,34 @@ document.getElementById('lang-select').addEventListener('change', (e) => {
   if (timeline.length > 0) renderTimelineStep(currentStep);
 });
 
-document.getElementById('theme-select').addEventListener('change', (e) => {
+document.getElementById('theme-toggle').addEventListener('click', () => {
+  const current = localStorage.getItem('jb-portfolio-theme') || 'light';
+  const mode = current === 'dark' ? 'light' : 'dark';
+  syncThemeUI(mode);
+});
+
+function syncThemeUI(mode) {
   const root = document.documentElement;
-  if (e.target.value === 'dark') {
+  const isDark = mode === 'dark';
+  if (isDark) {
     root.classList.add('dark'); root.classList.remove('light');
-    if (monaco.editor) monaco.editor.setTheme('vs-dark');
+    if (window.monaco) monaco.editor.setTheme('vs-dark');
   } else {
     root.classList.add('light'); root.classList.remove('dark');
-    if (monaco.editor) monaco.editor.setTheme('vs');
+    if (window.monaco) monaco.editor.setTheme('vs');
   }
-});
+  const icon = document.getElementById('theme-toggle-icon');
+  if (icon) {
+    icon.className = isDark ? 'fa-solid fa-moon text-indigo-400' : 'fa-solid fa-sun text-amber-500';
+  }
+  localStorage.setItem('jb-portfolio-theme', mode);
+}
+
+// Initial theme application
+(function initTheme() {
+  const theme = localStorage.getItem('jb-portfolio-theme') || 'light';
+  syncThemeUI(theme);
+})();
 
 const modal = document.getElementById('decision-modal');
 document.getElementById('visualize-trigger-btn').addEventListener('click', () => {

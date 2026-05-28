@@ -425,10 +425,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    themeSelector.addEventListener('change', e => {
-        document.documentElement.className = e.target.value;
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+        const current = localStorage.getItem('jb-portfolio-theme') || 'light';
+        const mode = current === 'dark' ? 'light' : 'dark';
+        syncThemeUI(mode);
         evaluateCodeWorkspace();
     });
+
+    function syncThemeUI(mode) {
+        const isDark = mode === 'dark';
+        document.documentElement.className = mode;
+        const icon = document.getElementById('theme-toggle-icon');
+        if (icon) {
+            icon.className = isDark ? 'fa-solid fa-moon text-indigo-400' : 'fa-solid fa-sun text-amber-500';
+        }
+        localStorage.setItem('jb-portfolio-theme', mode);
+    }
+
+    // Initial theme application
+    (function initTheme() {
+        const theme = localStorage.getItem('jb-portfolio-theme') || 'light';
+        syncThemeUI(theme);
+    })();
 
     document.getElementById('zoom-in').addEventListener('click', () => d3.select('#plan-svg').transition().duration(200).call(currentZoomBehavior.scaleBy, 1.25));
     document.getElementById('zoom-out').addEventListener('click', () => d3.select('#plan-svg').transition().duration(200).call(currentZoomBehavior.scaleBy, 0.8));
