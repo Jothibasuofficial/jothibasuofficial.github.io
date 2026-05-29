@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../2019/img/favicon.png" type="image/png">
+  <title>MERN Lifecycle Map — Cinematic Architect Trace</title>
+
+  <script>
+    (function() {
+      const theme = localStorage.getItem('jb-portfolio-theme') || 'light';
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root.dark {
+      --bg: #030712;
+      --bg-alt: #111827;
+      --border: #1f2937;
+      --text: #f9fafb;
+      --text-muted: #9ca3af;
+      --accent: #6366f1;
+      --accent-secondary: #ec4899;
+      --node-bg: #111827;
+    }
+
+    :root.light {
+      --bg: #f8fafc;
+      --bg-alt: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --node-bg: #ffffff;
+      --accent: #4f46e5;
+      --accent-secondary: #db2777;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.4s ease;
+    }
+
+    .brand-text {
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #main-svg {
+      filter: drop-shadow(0 0 20px rgba(0,0,0,0.05));
+    }
+
+    .browser-input {
+      fill: #f3f4f6;
+      stroke: #d1d5db;
+    }
+    .dark .browser-input {
+      fill: #1f2937;
+      stroke: #374151;
+    }
+
+    .db-record {
+      fill: var(--accent-secondary);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .server-log {
+      font-size: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      fill: #10b981;
+    }
+
+    .shimmer-bg {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite linear;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    .terminal-line {
+      animation: slideIn 0.3s ease-out forwards;
+    }
+    @keyframes slideIn {
+      from { transform: translateX(-10px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+  </style>
+</head>
+
+<body class="h-screen flex flex-col overflow-hidden select-none antialiased">
+
+  <header class="h-16 border-b shrink-0 flex items-center justify-between px-8 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md"
+    style="border-color:var(--border);">
+    <div class="flex items-center gap-6">
+      <div class="cursor-pointer group" onclick="location.href='../index.html'">
+        <img src="../../2019/img/logo.png" alt="JB Logo" class="h-8 group-hover:scale-105 transition-transform">
+      </div>
+      <div>
+        <h1 class="text-sm font-black tracking-tighter uppercase brand-text">Lifecycle Cinema</h1>
+        <p class="text-[9px] mono font-bold text-muted dark:text-white uppercase tracking-widest">Real-time Stack Simulation</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <select id="preset-select"
+        class="bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all cursor-pointer dark:text-white">
+        <option value="registration">🎬 Scenario: User Registration Pipeline</option>
+      </select>
+
+      <button id="theme-toggle" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 hover:scale-105 active:scale-95 transition-all">
+        <i id="theme-icon" class="fa-solid fa-sun text-amber-500"></i>
+      </button>
+
+      <button id="play-trigger" class="bg-indigo-600 text-white text-[10px] font-black px-6 py-2.5 rounded-xl shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 active:scale-95 transition-all uppercase tracking-widest flex items-center gap-2">
+        <i class="fa-solid fa-play"></i> Run Simulation
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+    <!-- Left: Debugger Console -->
+    <div class="h-1/3 lg:h-full lg:w-[450px] border-r flex flex-col bg-white dark:bg-slate-950" style="border-color:var(--border);">
+      <div class="h-10 border-b flex items-center px-5 bg-slate-50/50 dark:bg-slate-900/50 justify-between" style="border-color:var(--border);">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-terminal text-[10px] text-indigo-500"></i>
+          <span class="text-[10px] mono font-bold text-muted dark:text-white uppercase tracking-widest">System Runtime Debugger</span>
+        </div>
+        <div id="status-badge" class="text-[9px] font-black bg-slate-500/10 text-slate-500 px-2 py-0.5 rounded border border-slate-500/20 uppercase">Standby</div>
+      </div>
+      
+      <div class="flex-1 flex flex-col p-6 overflow-hidden">
+        <div class="mb-6 h-1/2 flex flex-col">
+          <div class="text-[9px] font-black text-indigo-500 uppercase mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-code"></i> Active Logic Snippet
+          </div>
+          <div class="flex-1 bg-slate-50 dark:bg-slate-900/50 rounded-xl p-4 border border-slate-200 dark:border-slate-800 relative overflow-hidden">
+            <pre id="code-block" class="text-[11px] font-mono leading-relaxed text-slate-500 dark:text-slate-400 h-full overflow-y-auto scrollbar-hide"></pre>
+          </div>
+        </div>
+        
+        <div class="flex-1 flex flex-col h-1/2">
+          <div class="text-[9px] font-black text-emerald-500 uppercase mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-microchip"></i> Live Simulation Logs
+          </div>
+          <div id="log-terminal" class="flex-1 bg-slate-900 rounded-xl p-4 font-mono text-[10px] text-emerald-400 overflow-y-auto shadow-inner border border-white/5">
+            <div class="opacity-40">> CPU Thread Pool Initialized</div>
+            <div class="opacity-40">> MERN Sandbox Listening...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Cinematic Canvas -->
+    <div class="flex-1 relative flex flex-col overflow-hidden bg-slate-50/30 dark:bg-slate-50/30">
+      <div class="absolute inset-0 shimmer-bg pointer-events-none"></div>
+      
+      <div id="viz-container" class="flex-1 relative">
+        <svg id="main-svg" class="w-full h-full">
+          <defs>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+            <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--border)" opacity="0.5" />
+            </marker>
+          </defs>
+        </svg>
+      </div>
+
+      <!-- Bottom Overlay: Architectural Review -->
+      <div id="insight-panel" class="h-40 border-t bg-white/95 dark:bg-slate-950/90 backdrop-blur-md p-8 transition-all duration-500 transform translate-y-0">
+        <div class="max-w-5xl mx-auto flex gap-10 items-center">
+          <div class="shrink-0">
+            <div class="h-16 w-16 rounded-3xl brand-grad flex items-center justify-center text-black dark:text-white text-2xl shadow-2xl shadow-indigo-500/40 relative">
+              <i class="fa-solid fa-shield-halved"></i>
+              <div class="absolute -top-1 -right-1 h-4 w-4 bg-emerald-500 rounded-full border-2 border-white dark:border-slate-950 animate-pulse"></div>
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-2">
+              <span id="insight-label" class="text-[10px] font-black uppercase tracking-widest text-indigo-500 bg-indigo-500/10 px-2 py-0.5 rounded">Core Logic</span>
+              <h3 id="insight-title" class="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">Architectural Awareness Node</h3>
+            </div>
+            <p id="insight-body" class="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed italic max-w-3xl">
+              "System on standby. Trigger the simulation to deconstruct the real-time data journey from React rendering cycles to physical MongoDB disk persistence."
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

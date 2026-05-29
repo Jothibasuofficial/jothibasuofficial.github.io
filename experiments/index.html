@@ -447,29 +447,40 @@
         </a>
       </div>
 
-      <!-- INACTIVE: MERN Data-Flow Lifecycle (In Incubation) -->
+      <!-- ACTIVE: MERN Data-Flow Lifecycle Card -->
       <div
-        class="opacity-0 transform translate-y-8 transition-all duration-700 relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs select-none nonlive-wrapper"
+        class="brand-glow theme-card opacity-0 transform translate-y-8 transition-all duration-700 group relative rounded-2xl p-6 border flex flex-col justify-between shadow-xs hover:shadow-xl"
         style="transition-delay: 300ms;">
+        <div
+          class="absolute top-0 right-0 h-24 w-24 bg-gradient-to-bl from-orange-500/5 to-transparent rounded-tr-2xl rounded-bl-full pointer-events-none">
+        </div>
         <div>
-          <div class="h-12 w-12 rounded-xl flex items-center justify-center text-xl mb-6 nonlive-icon-wrapper">
+          <div
+            class="h-12 w-12 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-600 dark:text-orange-400 text-xl mb-6 shadow-xs transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
             <i class="fa-solid fa-arrows-spin"></i>
           </div>
           <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-bold nonlive-title-text">MERN Lifecycle Map</h3>
-            <span
-              class="text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-md border nonlive-title-text">Late
-              2026</span>
+            <h2
+              class="text-lg font-bold transition-colors theme-text-main group-hover:text-orange-600 dark:group-hover:text-orange-400">
+              MERN Lifecycle Map</h2>
+            <div class="flex gap-1.5">
+              <span class="text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md border border-amber-500/20 bg-amber-500/10 text-amber-600 dark:text-amber-400">New</span>
+              <span
+                class="text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md border border-emerald-500/20 badge-live-engine animate-pulse">Live
+                Now</span>
+            </div>
           </div>
-          <p class="text-xs font-medium leading-relaxed mb-8 nonlive-desc-text">
+          <p class="theme-text-muted text-xs leading-relaxed mb-8">
             An illustrative lifecycle track showing how data flows from React state modifications, down through Express
             APIs, to final MongoDB document hooks.
           </p>
         </div>
-        <div
-          class="w-full inline-flex items-center justify-center space-x-2 border font-bold text-xs py-3 px-4 rounded-xl cursor-not-allowed nonlive-btn-engine">
-          <i class="fa-solid fa-lock text-[10px] mr-1"></i> Under Development
-        </div>
+        <a href="mern-lifecycle-map/index.html"
+          class="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-orange-600 to-rose-600 hover:from-orange-500 hover:to-rose-500 text-white font-semibold text-xs py-3 px-4 rounded-xl shadow-md transition-all transform active:scale-[0.98] group/btn">
+          <span>Launch Lifecycle Map</span>
+          <i
+            class="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-1.5"></i>
+        </a>
       </div>
 
       <!-- INACTIVE: Basic Sorting Visualizer (Planning) -->
